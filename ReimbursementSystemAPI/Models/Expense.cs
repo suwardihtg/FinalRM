@@ -44,11 +44,11 @@ namespace ReimbursementSystemAPI.Models
         ApprovedByManager,
         ApprovedByFinance,
         RejectedByManager,
-        RejectedByFinance,
-        OnManager2,
+        RejectedByFinance
+        /*OnManager2,
         ApprovedByManager2,
         OnManager3,
-        ApprovedByManager3
+        ApprovedByManager3*/
     }
 
 }

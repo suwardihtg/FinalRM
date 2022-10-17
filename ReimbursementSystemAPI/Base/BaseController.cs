@@ -50,7 +50,7 @@ namespace ReimbursementSystemAPI.Base
             var result = repository.Delete(key);
             try
             {
-                return Ok();
+                return Ok(new { result = 200, message = "Data Successfully Deleted" });
             }
             catch (NullReferenceException)
             {
@@ -64,7 +64,7 @@ namespace ReimbursementSystemAPI.Base
             var result = repository.Update(entity, key);
             try
             {
-                return Ok();
+                return Ok(new { result = 200, message = "Data Successfully Updated" });
             }
             catch (Exception)
             {
@@ -77,7 +77,7 @@ namespace ReimbursementSystemAPI.Base
         {
             try {
                 var result = repository.Insert(entity);
-                return Ok();
+                return Ok(new { result = 200, message = "Data Successfully Inserted" });
             }
             catch (Exception)
             {
