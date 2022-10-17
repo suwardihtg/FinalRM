@@ -131,7 +131,7 @@ namespace ReimbursementSystemAPI.Controllers
                     case 6:
                         expenseRepository.NotifApproveF(expenseVM.ExpenseId);
                         break;
-                    case 7:
+                    /*case 7:
                         expenseRepository.NotifRejectSM(expenseVM.ExpenseId);
                         break;
                     case 8:
@@ -142,7 +142,7 @@ namespace ReimbursementSystemAPI.Controllers
                         break;
                     case 10:
                         expenseRepository.NotifApproveD(expenseVM.ExpenseId);
-                        break;
+                        break;*/
                     default:
                         break;
                 }
@@ -170,7 +170,7 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("ExpenseDataSManager")]
+        /*[HttpGet("ExpenseDataSManager")]
         public ActionResult GetExpenseSManager()
         {
             var result = expenseRepository.GetExpenseSManager();
@@ -192,7 +192,7 @@ namespace ReimbursementSystemAPI.Controllers
                 return Ok(result);
             }
             return NotFound(result);
-        }
+        }*/
 
         [HttpGet("GetExpenseManagerReject")]
         public ActionResult GetExpenseManagerReject()

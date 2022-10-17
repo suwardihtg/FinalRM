@@ -60,7 +60,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                     case 8:
                         expense.Status = Status.RejectedByFinance;
                         break;
-                    case 9:
+                    /*case 9:
                         expense.Status = Status.OnManager2;
                         break;
                     case 10:
@@ -71,7 +71,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                         break;
                     case 12:
                         expense.Status = Status.ApprovedByManager3;
-                        break;
+                        break;*/
                     default:
                         break;
                 }
@@ -115,7 +115,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 case 6:
                     history = "Accepted by Finance ";
                     break;
-                case 7:
+                /*case 7:
                     history = "Rejected by Senior Manager ";
                     break;
                 case 8:
@@ -125,16 +125,16 @@ namespace ReimbursementSystemAPI.Repository.Data
                     history = "Rejected by Director ";
                     break;
                 case 10:
-                    history = "Accepted by Director ";
-                    break;
-                case 12:
+                    history = "Accepted by Director ";*/
+                    //break;
+                case 8:
                     history = "Deleted ";
                     break;
                 default:
                     break;
             }
 
-            if (code != 11)
+            if (code != 7)
             {
                 DateTime aDate = DateTime.Now;
 
@@ -191,7 +191,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 case 8:
                     expense.Status = Status.RejectedByFinance;
                     break;
-                case 9:
+                /*case 9:
                     expense.Status = Status.OnManager2;
                     break;
                 case 10:
@@ -202,7 +202,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                     break;
                 case 12:
                     expense.Status = Status.ApprovedByManager3;
-                    break;
+                    break;*/
                 default:
                     break;
             }
@@ -258,7 +258,7 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             var expense = from a in context.Employees
                           join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                          where b.Status == Status.ApprovedByManager || b.Status == Status.ApprovedByManager2 || b.Status == Status.ApprovedByManager3
+                          where b.Status == Status.ApprovedByManager /*|| b.Status == Status.ApprovedByManager2 || b.Status == Status.ApprovedByManager3*/
                           select new ExpenseManager()
                           {
                               Status = (int)b.Status,
@@ -313,7 +313,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             return expense.ToList();
         }
 
-        public IEnumerable<ExpenseManager> GetExpenseSManager()
+        /*public IEnumerable<ExpenseManager> GetExpenseSManager()
         {
             var expense = from a in context.Employees
                           join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -349,7 +349,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                               Purpose = b.Purpose
                           };
             return expense.ToList();
-        }
+        }*/
 
         public IEnumerable<ExpenseManager> GetExpenseManagerReject()
         {
@@ -625,7 +625,7 @@ namespace ReimbursementSystemAPI.Repository.Data
 
 
         //<!----------------- Notif Senior Manager ------------------->
-        public int NotifApproveSM(int expenseid)
+        /*public int NotifApproveSM(int expenseid)
         {
             var data = (from a in context.Employees
                         join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -667,9 +667,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 1;
             }
             return 3;
-        }
+        }*/
 
-        public int NotifRejectSM(int expenseid)
+        /*public int NotifRejectSM(int expenseid)
         {
             var data = (from a in context.Employees
                         join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -711,12 +711,12 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 1;
             }
             return 3;
-        }
+        }*/
 
 
 
         //<!----------------- Notif Director ------------------->
-        public int NotifApproveD(int expenseid)
+        /*public int NotifApproveD(int expenseid)
         {
             var data = (from a in context.Employees
                         join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -757,9 +757,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 1;
             }
             return 3;
-        }
+        }*/
 
-        public int NotifRejectD(int expenseid)
+        /*public int NotifRejectD(int expenseid)
         {
             var data = (from a in context.Employees
                         join b in context.Expenses on a.EmployeeId equals b.EmployeeId
@@ -801,6 +801,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 1;
             }
             return 3;
-        }
+        }*/
     }
 }
