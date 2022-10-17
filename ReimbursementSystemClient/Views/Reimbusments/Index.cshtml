@@ -1,0 +1,44 @@
+﻿@{
+    Layout = "_EmployeeLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Focus - Bootstrap Admin Dashboard </title>
+ Favicon icon 
+</head>
+
+<body>
+
+    <div class="container-fluid">
+ row 
+<div class="card">
+            <div class="card-header">
+                <h4 class="card-title">EXPENSE REIMBUSMENTS</h4>
+            </div>
+            <div class="card-body">
+                <button type="button" onclick="return InsertExpense()" class="btn btn-primary add-expense"> Expense </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">EXPENSE</h4>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+@section Scripts
+    {
+    <script src="~/js/ReimbusmentJS.js"></script>
+}

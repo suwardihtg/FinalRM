@@ -1,0 +1,146 @@
+﻿@{
+    Layout = "_EmployeeLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Focus - Bootstrap Admin Dashboard </title>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">EXPENSE REIMBUSMENTS</h4>
+            </div>
+            <div class="card-body">
+                <button type="button" onclick="InsertExpense()" class="btn btn-primary add-expense"> New Expense </button>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">EXPENSE</h4>
+            </div>
+            <div class="card-body">
+                <table id="Expense-table" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
+                    <thead class="table-info head-table text-center">
+                        <tr class="bg-primary column-tab">
+                            <th scope="col" class="text-light text-center"> Date </th>
+                            <th scope="col" class="text-light text-center"> Request # ID </th>
+                            <th scope="col" class="text-light text-center"> Total Expense </th>
+                            <th scope="col" class="text-light text-center"> Purpose </th>
+                            <th scope="col" class="text-light text-center"> Status </th>
+                            <th scope="col" class="text-light text-center"> Action </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-dark">
+                        <tr>
+                            <td>data-1</td>
+                            <td>data-2</td>
+                            <td>data-3</td>
+                            <td>data-4</td>
+                            <td>data-5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Detail Employee-->
+    <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Expense Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="row infoo" id="info">
+
+                            </div>
+                            <div class="row">
+                                <div class="basic-form form-group col-xl-12">
+                                    <label class="text-dark" for="inputState">Description</label>
+                                    <textarea class="form-control text-dark" rows="2" id="desc" name="message" disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <div class="table-responsive">
+                                        <table class="table header-border table-responsive-sm " id="dataTableForm" width="100%">
+                                            <thead>
+                                                <tr >
+                                                    <th>Recipt Date</th>
+                                                    <th>Category</th>
+                                                    <th>Total</th>
+                                                    <th>Payee</th>
+                                                    <th>Attachments</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-dark" id="datail">
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Gambar-->
+    <div class="modal fade" id="DetailModalimage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Attachment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col text-center col-xl-12">
+                                <img id="images" src="" width="480">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@section Scripts
+    {
+    <script src="~/js/site.js"></script>
+    <script src="~/js/ReimbusmentJS.js"></script>
+}
