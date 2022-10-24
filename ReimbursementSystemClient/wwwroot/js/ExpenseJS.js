@@ -103,7 +103,7 @@
                             <i class="fa fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger hide-btn" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
-                            <i class="fa fa-trash-alt"></i> 
+                            <i class="fa fa-trash"></i> 
                             </button>
                             <button type="button" class="btn btn-info hide-btn" data-toggle="modal"
                             onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">

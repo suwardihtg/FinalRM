@@ -14,14 +14,6 @@
 <body>
 
     <div class="container-fluid">
-        @*<div class="card">*@
-            @*<div class="card-header">
-                <h4 class="card-title">EXPENSE REIMBUSMENTS</h4>
-            </div>*@
-            @*<div class="card-body">*@
-                @*<button type="button" onclick="InsertExpense()" class="btn btn-primary add-expense" data-toggle="modal" data-target="#addRequest"><i class="fa fa-plus-circle"></i> New Reimbursement Request </button>*@
-            @*</div>*@
-        @*</div>*@
 
         <!-- Table -->
         <div class="card">
@@ -59,7 +51,7 @@
     </div>
 
     <!-- Modal Reimbursement Request-->
-    <div class="modal fade" id="addRequest" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @*<div class="modal fade" id="addRequest" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -93,7 +85,7 @@
                                     </div>
                                 </div>
                             </form>
-                            <button class="btn btn-primary mb-3 hide-btn" id="buttonNext" type="button" data-toggle="modal" data-target="#completeForm" onclick="return InsertForm()">Next@*&nbsp;&nbsp;<i class="fas fa-plus" style="size: 9x"></i> *@</button>
+                            <button class="btn btn-primary mb-3 hide-btn" id="buttonNext" type="button" data-toggle="modal" data-target="#completeForm" onclick="return InsertForm()">Next</button>
                             <div class="col-xl-6 text-dark">
                                 <label for="inputState">Status History <i class="fas fa-history"></i></label>
                                 <textarea class="form-control" rows="5" id="History" disabled></textarea>
@@ -118,10 +110,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <!-- Modal Form Request-->
-    <div class="modal fade" id="completeForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @*<div class="modal fade" id="completeForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -211,7 +203,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
     <!-- Modal Detail Employee-->
     <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

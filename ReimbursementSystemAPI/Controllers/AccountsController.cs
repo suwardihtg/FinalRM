@@ -47,6 +47,7 @@ namespace ReimbursementSystemAPI.Controllers
                                        {
                                            Email = a.Email,
                                            Id = a.EmployeeId,
+                                           Name = a.FirstName + " " + a.LastName,
                                            Role = c.Name
                                        }).ToList();
 
@@ -54,6 +55,7 @@ namespace ReimbursementSystemAPI.Controllers
                     {
                         new Claim(JwtRegisteredClaimNames.Email, getUserData[0].Email),
                         new Claim(JwtRegisteredClaimNames.NameId, getUserData[0].Id),
+                        new Claim(ClaimTypes.Name, getUserData[0].Name),
                         new Claim(JwtRegisteredClaimNames.UniqueName, getUserData[0].Role),
                         new Claim(ClaimTypes.Role, getUserData[0].Role)
                     };

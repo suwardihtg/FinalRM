@@ -217,7 +217,10 @@ function InsertExpense() {
         success: function (result) {
             console.log(result)
             window.location.href = "/Reimbusments/Form";
+<<<<<<< HEAD
             //window.location.href = "/Reimbusments/Expense";
+=======
+>>>>>>> 4e407d87cc3de7ed24548dc506d12203ecba95e7
             //$("#addRequest").modal("toggle");
         },
         error: function (error) {
