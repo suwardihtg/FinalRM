@@ -16,11 +16,11 @@
     <div class="container-fluid">
         <!-- Data -->
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" style="justify-content: center">
                 <h4 class="card-title expense-title">Expense Request # <span value=""></span></h4>
             </div>
             <div class="card-body">
-                <form class="needs-validation" novalidate>
+                @*<form class="needs-validation" enctype="multipart/form-data" novalidate>
 
                     <div class="row">
 
@@ -45,11 +45,9 @@
                         </div>
                     </div>
 
+                </form>*@
 
-
-                </form>
-
-                <button class="btn btn-primary mb-3 hide-btn" type="button" onclick="return InsertForm()">Add Expense Form&nbsp;&nbsp;<i class="fas fa-plus" style="size: 9x"></i> </button>
+                @*<button class="btn btn-primary mb-3 hide-btn" type="button" onclick="return InsertForm()"><i class="fa fa-plus-circle"></i> Add Request</button>*@
                 <table id="Formtable" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
                     <thead class="table-info head-table text-center">
                         <tr class="bg-primary column-tab">
@@ -88,7 +86,7 @@
                         </div>
                         <div class="mt-4">
                             <button class="btn btn-success hide-btn" type="button" onclick="return Submit()">Submit Expense</button>
-                            <button class="btn btn-primary hide-btn" type="button" onclick="return SaveExit()">Save & Exit</button>
+                            @*<button class="btn btn-primary hide-btn" type="button" onclick="return SaveExit()">Save & Exit</button>*@
 
                         </div>
                     </div>
