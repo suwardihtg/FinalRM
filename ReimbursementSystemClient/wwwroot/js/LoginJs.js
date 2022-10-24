@@ -1,11 +1,8 @@
-﻿
-
-function Login() {
+﻿function Login() {
     var obj = new Object();
         obj.email = $("#email").val(),
         obj.password = $("#password").val(),
-            console.log(obj),
-      
+        console.log(obj),
         $.ajax({
             type: "POST",
             url: "/Accounts/Auth",

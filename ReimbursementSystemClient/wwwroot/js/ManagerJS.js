@@ -50,7 +50,7 @@
                             <i class="fas fa-search-plus"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
+                            onclick="Reject('${row['expenseId']}')" data-target="#UpdateModals" title="Reject">
                             <i class="far fa-times-circle"></i>
                             </button>
                             <button type="button" class="btn btn-info" data-toggle="modal" 
@@ -65,9 +65,9 @@
 
 
 
-function Reject() {
-    var expenseid = parseInt($('#expenseId').text())
-    var managercomment = $('textarea#managercomment').val();
+function Reject(expenseid) {
+    //var expenseid = parseInt($('#expenseId').text())
+    //var managercomment = $('textarea#managercomment').val();
     Swal.fire({
         title: 'Are you sure?',
         type: "warning",
@@ -76,15 +76,16 @@ function Reject() {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, Reject it!'
     }).then((result) => {
+        console.log("test");
         if (result.value) {
             $.ajax({
                 url: "/Expenses/Get/" + expenseid,
                 type: "Get",
                 success: function (result2) {
                     var obj = new Object();
-                    obj.expenseId = expenseid;
+                    obj.expenseId = result2.expenseId;
                     obj.approver = result2.approver;
-                    obj.commentManager = managercomment;
+                    obj.commentManager = result2.commentManager;
                     obj.commentFinace = result2.commentFinace;
                     obj.purpose = result2.purpose;
                     obj.description = result2.description;
@@ -94,15 +95,18 @@ function Reject() {
                     console.log(obj)
                     $.LoadingOverlay("show");
                     setTimeout(function () {
+                        console.log("test");
                         $.ajax({
                             url: "/Expenses/Approval/" + 3,
                             type: "Put",
                             'data': obj,
                             'dataType': 'json',
-                            success: function (result2) {
+                            success: function (result) {
+                                console.log("test2");
                                 $.LoadingOverlay("hide");
                                 table.ajax.reload();
                                 $("#exampleModal").modal('hide');
+                                console.log(result);
                             },
                             error: function (error) {
                                 console.log(error)
@@ -117,7 +121,60 @@ function Reject() {
         }
 
     })
-    
+    /*Swal.fire({
+        title: 'Are you sure?',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Reject it!'
+    }).then((result) => {
+        console.log(result)
+        if (result.value) {
+            $.ajax({
+                url: "/Expenses/Get/" + expenseid,
+                type: "Get",
+                success: function (result) {
+                    var obj = new Object();
+                    obj.expenseId = expenseid;
+                    obj.approver = result.approver;
+                    obj.commentManager = result.commentManager;
+                    obj.commentFinace = result.commentFinace;
+                    obj.purpose = result.purpose;
+                    obj.description = result.description;
+                    obj.total = result.total;
+                    obj.employeeId = result.employeeId;
+                    obj.status = 7;
+                    console.log(obj)
+
+                    $.LoadingOverlay("show");
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "/Expenses/Approval/" + 4,
+                            type: "Put",
+                            'data': obj,
+                            'dataType': 'json',
+                            success: function (result2) {
+                                $.LoadingOverlay("hide");
+                                table.ajax.reload();
+                                console.log(result2);
+                            },
+                            error: function (error) {
+                                console.log(error)
+                            }
+                        })
+                    });
+
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+
+
+        }
+
+    })*/
 }
 
 function Approve(expenseid) {
@@ -146,9 +203,9 @@ function Approve(expenseid) {
                     obj.total = result.total;
                     obj.employeeId = result.employeeId;
                     obj.status = 5;
-                    if (result.total > 5000000) {
+                    /*if (result.total > 5000000) {
                         obj.status = 9;
-                    } 
+                    }*/ 
                     console.log(obj)
 
                     $.LoadingOverlay("show");
@@ -167,6 +224,31 @@ function Approve(expenseid) {
                                 console.log(error)
                             }
                         })
+                        /*$.ajax({
+                            url: "/Expenses/Approval/" + 4,
+                            type: "PUT",
+                            data: obj
+                        }).done((result) => {
+                            console.log(result);
+                            if (result == 200) {
+                                Swal.fire(
+                                    'Good Job!',
+                                    'Your data has been saved.',
+                                    'success'
+                                )
+                                $.LoadingOverlay("hide");
+                                $('#tabelExpense').DataTable().ajax.reload();
+                            }
+                            else if (result == 400) {
+                                Swal.fire(
+                                    'Watch Out!',
+                                    'Duplicate Data!',
+                                    'error'
+                                )
+                            }
+                        }).fail((error) => {
+                            console.log(error);
+                        })*/
                     });
                     
                 },

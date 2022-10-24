@@ -20,6 +20,21 @@
 
             table = $("#Formtable").DataTable({
                 responsive: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+                        extend: 'copyHtml5',
+                        text: '',
+                        className: 'buttonHide fa fa-copy btn-default',
+                        exportOptions: { orthogonal: 'export' }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '',
+                        className: 'buttonHide fa fa-download btn-default',
+                        exportOptions: { orthogonal: 'export' }
+                    },
+                ],
                 "ajax": {
                     "url": "/forms/getform/" + result,
                     type: "Get",
@@ -85,14 +100,14 @@
                         "render": function (data, type, row) {
                             return `<button type="button" class="btn btn-primary " data-toggle="modal" 
                             onclick="getDataForm('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                            <i class="fas fa-info-circle"></i> 
+                            <i class="fa fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger hide-btn" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
-                            <i class="fas fa-trash-alt"></i> 
+                            <i class="fa fa-trash-alt"></i> 
                             </button>
                             <button type="button" class="btn btn-info hide-btn" data-toggle="modal"
                             onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">
-                            <i class="fas fa-edit"></i>
+                            <i class="fa fa-edit"></i>
                             </button>`;
                         }
                     }  
