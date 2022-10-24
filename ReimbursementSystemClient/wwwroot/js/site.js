@@ -217,7 +217,7 @@ function tableformdetail(expenseid) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="showimage('${row['attachments']}')" data-placement="top"
                             title="Attachments">
-                            <i class="fas fa-images"></i></button>`;
+                            <i class="fa fa-images"></i></button>`;
                 }
             }
         ]
@@ -332,7 +332,7 @@ function AllTable() {
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                            <i class="fas fa-info-circle"></i> `;
+                            <i class="fa fa-info-circle"></i> `;
                 }
 
             }

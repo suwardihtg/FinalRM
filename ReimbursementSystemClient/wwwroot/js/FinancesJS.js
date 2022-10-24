@@ -71,10 +71,10 @@
                             <i class="fas fa-search-plus"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
+                            onclick="Reject('${row['expenseId']}')" data-target="#UpdateModals" title="Reject">
                             <i class="far fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                            <button type="button" class="btn btn-info" data-toggle="modal"
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="far fa-check-circle"></i>
                             </button>`;
@@ -95,8 +95,8 @@ function dateConversion(dates) {
     return newDate
 }
 
-function Reject() {
-    var expenseid = parseInt($('#expenseId').text())
+function Reject(expenseid) {
+    //var expenseid = parseInt($('#expenseId').text())
     var finance = $('textarea#managercomment').val();
     Swal.fire({
         title: 'Are you sure?',

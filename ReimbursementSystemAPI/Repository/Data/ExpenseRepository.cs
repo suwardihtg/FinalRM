@@ -142,6 +142,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 {
                     expenseHistory.Date = DateTime.Now;
                     expenseHistory.Message = history + aDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
+                    //expenseHistory.Expenses.ExpenseId = expenseVM.ExpenseId;
                     expenseHistory.ExpenseId = expenseVM.ExpenseId;
                 }
                 context.ExpenseHistories.Add(expenseHistory);
@@ -417,7 +418,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 try
                 {
                     MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.From = new MailAddress("fanynabilah@gmail.com");
                     mail.To.Add(data.Employee.Email);
                     mail.Subject = $"【Reimbursment】Request Successful";
                     mail.Body = sb.ToString();
@@ -427,7 +428,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                     using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                     {
                         smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                            NetworkCredential("fanynabilah@gmail.com", "Tigatujuh37");
                         smtp.EnableSsl = true;
                         smtp.Send(mail);
                     }
@@ -556,7 +557,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 try
                 {
                     MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
+                    mail.From = new MailAddress("fanynabilah@gmail.com");
                     mail.To.Add(data.Employee.Email);
                     mail.Subject = $"【Reimbursment】Manager Approve";
                     mail.Body = sb.ToString();
@@ -565,7 +566,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                     using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                     {
                         smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
+                            NetworkCredential("fanynabilah@gmail.com", "Tigatujuh37");
                         smtp.EnableSsl = true;
                         smtp.Send(mail);
                     }

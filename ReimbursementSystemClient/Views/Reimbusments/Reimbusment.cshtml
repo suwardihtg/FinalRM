@@ -8,27 +8,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>Reimburse Management System</title>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header">
+        @*<div class="card">*@
+            @*<div class="card-header">
                 <h4 class="card-title">EXPENSE REIMBUSMENTS</h4>
-            </div>
-            <div class="card-body">
-                <button type="button" onclick="InsertExpense()" class="btn btn-primary add-expense"> New Expense </button>
-            </div>
-        </div>
+            </div>*@
+            @*<div class="card-body">*@
+                @*<button type="button" onclick="InsertExpense()" class="btn btn-primary add-expense" data-toggle="modal" data-target="#addRequest"><i class="fa fa-plus-circle"></i> New Reimbursement Request </button>*@
+            @*</div>*@
+        @*</div>*@
 
         <!-- Table -->
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">EXPENSE</h4>
+            <div class="card-header" style="justify-content: center">
+                <h1 class="card-title">REIMBURSEMENT</h1>
             </div>
             <div class="card-body">
+                <p>
+                    <button type="button" onclick="InsertExpense()" class="btn btn-primary add-expense" @*data-toggle="modal" data-target="#addRequest"*@><i class="fa fa-plus-circle"></i> New Reimbursement Request </button>
+                </p>
                 <table id="Expense-table" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
                     <thead class="table-info head-table text-center">
                         <tr class="bg-primary column-tab">
@@ -53,6 +56,161 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Modal Reimbursement Request-->
+    <div class="modal fade" id="addRequest" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">Reimbursement Request</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form class="needs-validation" novalidate>
+                                <div class="row">
+
+                                    <div class="form-group col-xl-6 text-dark">
+                                        <label for="inputState">Approver : <span id="Approver"></span> </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xl-6 text-dark">
+                                        <label for="inputState">Purpose</label>
+                                        <input type="text" class="form-control input-default" placeholder="" id="Purpose" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="basic-form form-group col-xl-6 text-dark">
+                                        <label for="inputState">Description</label>
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="4" id="Description"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="btn btn-primary mb-3 hide-btn" id="buttonNext" type="button" data-toggle="modal" data-target="#completeForm" onclick="return InsertForm()">Next@*&nbsp;&nbsp;<i class="fas fa-plus" style="size: 9x"></i> *@</button>
+                            <div class="col-xl-6 text-dark">
+                                <label for="inputState">Status History <i class="fas fa-history"></i></label>
+                                <textarea class="form-control" rows="5" id="History" disabled></textarea>
+                            </div>
+
+                            <div class="col-xl-6 text-dark">
+                                <label for="inputState">Total Expense </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">Rp.</span>
+                                    </div>
+                                    <input id="Total" type="number" class="form-control" placeholder="Rp.0" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" disabled>
+                                </div>
+                                <div class="mt-4">
+                                    <button class="btn btn-success hide-btn" type="button" onclick="return Submit()">Submit Expense</button>
+                                    <button class="btn btn-primary hide-btn" type="button" onclick="return SaveExit()">Save & Exit</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form Request-->
+    <div class="modal fade" id="completeForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="exampleModalLabel">Reimbursement Request</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <form class="needs-validation" enctype="multipart/form-data" novalidate>
+                                <div class="row date-input">
+                                    <div class="form-group col-xl-6">
+                                        <label>Receipt Date <span class="text-danger">*</span></label>
+                                        <input type="date" name="datepicker" class="form-control" id="Receipt_Date" placeholder="Receipt Date" required>
+                                    </div>
+                                    <div class="form-group col-xl-3">
+                                        <div class="example">
+                                            <p class="mb-1">From <span class="text-danger">*</span> </p>
+                                            <input type="date" name="datepicker1" class="form-control" id="Start_Date" placeholder="Date From" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xl-3">
+                                        <div class="example">
+                                            <p class="mb-1">To <span class="text-danger">*</span> </p>
+                                            <input type="date" name="datepicker2" class="form-control" id="End_Date" placeholder="Date To" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row category-total-input">
+                                    <div class="form-group col-xl-6">
+                                        <label for="Category">Category <span class="text-danger">*</span> </label>
+                                        <select id="Category" class="form-control form-control" required>
+                                            <option disabled selected="selected" value="">Choose...</option>
+                                            <option value="0">Transportation</option>
+                                            <option value="1">Parking</option>
+                                            <option value="2">Medical</option>
+                                            <option value="3">Lodging</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-xl-6">
+                                        <label for="Category">Money Spent <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroup-sizing-default">Total Amount Rp.</span>
+                                            </div>
+                                            <input id="Total" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row payee-travel-input">
+                                    <div class="form-group col-xl-6">
+                                        <label for="inputState">Travel destination State</label>
+                                        <input type="text" class="form-control input-default " placeholder="Travel destination State" id="Destination">
+                                    </div>
+                                    <div class="form-group col-xl-6">
+                                        <label for="Payee">Payee <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control input-default " placeholder="Who recive the payment" id="Payee" required>
+                                    </div>
+                                </div>
+                                <div class="row description-input">
+                                    <div class="basic-form form-group col-xl-12">
+                                        <label for="inputState">Description</label>
+                                        <div class="form-group">
+                                            <textarea class="form-control" rows="4" id="Description">
+                                </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row attachment-input">
+                                    <div class="form-group col-xl-6">
+                                        <div class="custom-file">
+                                            <label for="">Attachment/Receipt <span class="text-danger">*</span> </label>
+                                            <input type="file" class="form-control input-default" id="Attachments" required>
+                                        </div>
+                                        <div class="mt-4">
+                                            <button class="btn btn-primary Save-Exit" type="button" onclick="return ValidateEmployee(1)">Save and Exit</button>
+                                            <button class="btn btn-primary" type="button" onclick="return ValidateEmployee(2)">Add Another</button>
+                                            <button class="btn btn-primary" type="button" onclick="return Cancel()">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal Detail Employee-->
