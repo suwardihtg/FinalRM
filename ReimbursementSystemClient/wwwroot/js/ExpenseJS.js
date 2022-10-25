@@ -191,7 +191,7 @@ function Submit() {
         success: function (result) {
             Swal.fire(
                 'Good job!',
-                'Your data has been Submitted!',
+                'Your data has been submitted!',
                 'success',    
             ).then((result2) => {
                 if (result2) {

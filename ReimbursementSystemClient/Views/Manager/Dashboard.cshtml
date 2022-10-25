@@ -13,12 +13,15 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Expense Request | Manager </h4>
+                <h4 class="card-title">Dashboard Manager</h4>
             </div>
             <div class="card-body">
+                <div style="text-align: center">
+                    <h4>REIMBURSEMENT</h4>
+                </div>
                 <div class="button mb-4">
                     <button class="btn btn-primary button " type="button" onclick="return RequestTable()">Request</button>
-                    <button class="btn btn-primary button " type="button" onclick="return RejectTable()">Rejected</button>
+                    <button class="btn btn-danger button " type="button" onclick="return RejectTable()">Rejected</button>
                     <button class="btn btn-primary button " type="button" onclick="return AllTable()">All</button>
                 </div>
                 <table class="table table-hover dt-responsive table-striped nowarp" style="width:100%" id="tabelExpense">
