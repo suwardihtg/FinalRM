@@ -69,7 +69,7 @@
                             onclick="Reject('${row['expenseId']}')" data-target="#UpdateModals" title="Reject">
                             <i class="fa fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            <button type="button" class="btn btn-success" data-toggle="modal" 
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="fa fa-check-circle"></i>
                             </button>`;

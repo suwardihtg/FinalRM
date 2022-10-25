@@ -334,7 +334,7 @@ $(document).ready(function () {
                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                             </button>
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" class="btn btn-warning"
                             onclick="EditExpense('${row['expenseId']}')" title="Edit" >
                             <i class="fa fa-edit"></i>
                             </button>`
