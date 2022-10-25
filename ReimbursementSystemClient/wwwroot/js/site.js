@@ -31,21 +31,21 @@ function status(stat) {
         case 4:
             return "Canceled";
         case 5:
-            return "Approved By Manager <br> Waiting for Finance Approval";
+            return "Approved by Manager, <br> Waiting for Finance Approval";
         case 6:
-            return "Approved By Finance";
+            return "Approved by Finance";
         case 7:
-            return "Rejected At Phase 1"; 
+            return "Rejected by Manager"; 
         case 8:
-            return "Rejected By Finance";
-        case 9:
+            return "Rejected by Finance";
+        /*case 9:
             return "Approved By Manager <br> Waiting for Senior Manager Approval";
         case 10:
             return "Approved By Senior Manager <br> Waiting for Finance Approval";
         case 11:
             return "Approved By Senior Manager <br> Waiting for Director Approval ";
         case 12:
-            return "Approved By Director <br> Waiting for Finance Approval";
+            return "Approved By Director <br> Waiting for Finance Approval";*/
         default:
             return "Draft";
             break;
@@ -214,10 +214,10 @@ function tableformdetail(expenseid) {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                    return `<button type="button" class="btn btn-light" data-toggle="modal" 
                             onclick="showimage('${row['attachments']}')" data-placement="top"
                             title="Attachments">
-                            <i class="fa fa-images"></i></button>`;
+                            <i class="fa fa-file-image-o"></i> View Image </button>`;
                 }
             }
         ]

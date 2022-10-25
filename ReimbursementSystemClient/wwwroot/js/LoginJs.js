@@ -9,8 +9,8 @@
             dataType: 'json',
             data: obj,
             success: function (result) {
+                console.log(result);
                 window.location.href = result;
- 
             },
             error: function (error) {
                 Swal.fire({
@@ -24,12 +24,12 @@
     $.LoadingOverlay("show");
     setTimeout(function () {
         $.LoadingOverlay("hide");
-    }, 3000);
+    }, 2000);
 }
 
 // Show full page LoadingOverlay
 
 
 
-// Hide it after 3 seconds
+// Hide it after 2 seconds
 

@@ -47,7 +47,18 @@ namespace ReimbursementSystemClient.Controllers
             HttpContext.Session.SetString("Role", role);
             HttpContext.Session.SetString("Name", name);
 
-            return Json(Url.Action("Reimbusment", "Reimbusments"));
+            if (role == "Manager")
+            {
+                return Json(Url.Action("Dashboard", "Manager"));
+            }
+            else if (role == "Finance")
+            {
+                return Json(Url.Action("FDashboard", "Finances"));
+            }
+            else
+            {
+                return Json(Url.Action("Reimbusment", "Reimbusments"));
+            }
         }
 
         public IActionResult Logout()
