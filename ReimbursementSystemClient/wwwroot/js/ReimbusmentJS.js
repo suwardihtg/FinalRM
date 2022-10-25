@@ -216,7 +216,7 @@ function InsertExpense() {
         'dataType': 'json',
         success: function (result) {
             console.log(result)
-            window.location.href = "/Reimbusments/Expense";
+            window.location.href = "/Reimbusments/Form";
             //$("#addRequest").modal("toggle");
         },
         error: function (error) {
@@ -329,9 +329,9 @@ $(document).ready(function () {
                             <i class="fa fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
-                            <i class="fa fa-trash-alt"></i>
+                            <i class="fa fa-trash"></i>
                             </button>
-                            <button type="button" class="btn btn-info"
+                            <button type="button" class="btn btn-primary"
                             onclick="EditExpense('${row['expenseId']}')" title="Edit" >
                             <i class="fa fa-edit"></i>
                             </button>`

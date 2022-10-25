@@ -30,7 +30,7 @@ namespace ReimbursementSystemAPI.Controllers
             {
                 string newString = "";
                 newString = Regex.Replace(file.FileName, @"\s+", "_");
-                var filePath = Path.Combine("C:/Users/Gigabyte/source/repos/ReimbursementSystem/ReimbursementSystemAPI/wwwroot/Images/", newString);
+                var filePath = Path.Combine("C:/Users/fanyn/source/repos/FinalRM/ReimbursementSystemAPI/wwwroot/Images", newString);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     file.CopyTo(fileStream);

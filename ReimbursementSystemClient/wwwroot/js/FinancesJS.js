@@ -9,27 +9,26 @@
             "datatype": "json",
             dataSrc: ""
         },
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
         buttons: [
             {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
             },
             {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
             },
             {
                 extend: 'print',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
             }
-
         ],
         "columnDefs": [
             { "className": "dt-center", "targets": "_all" }
@@ -64,28 +63,19 @@
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                            <i class="fas fa-info-circle"></i> 
-                            </button>
-                            <button type="button" class="btn btn-info"
-                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
-                            <i class="fas fa-search-plus"></i>
+                            <i class="fa fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="Reject('${row['expenseId']}')" data-target="#UpdateModals" title="Reject">
-                            <i class="far fa-times-circle"></i>
+                            <i class="fa fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-info" data-toggle="modal"
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
-                            <i class="far fa-check-circle"></i>
+                            <i class="fa fa-check-circle"></i>
                             </button>`;
                 }
             }
-        ],
-        initComplete: function () {
-            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
-            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
-            $('.buttons-print').html('<i class="fa fa-print" />')
-        }
+        ]
     });
 });
 
@@ -104,7 +94,7 @@ function Reject(expenseid) {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Reject it!'
+        confirmButtonText: 'Yes, reject it!'
     }).then((result) => {
         if (result.value) {
             $.ajax({
@@ -151,8 +141,8 @@ function Reject(expenseid) {
 
 function Approve(expenseid) {
     swal({
-        title: "Do you want to approvee this ??",
-        text: "You can't revert this!!",
+        title: "Do you want to approve this request?",
+        text: "You won't be able to revert this!",
         type: "info",
         showCancelButton: true,
         closeOnConfirm: false,
@@ -283,7 +273,7 @@ function RejectTable() {
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                            <i class="fas fa-info-circle"></i> 
+                            <i class="fa fa-info-circle"></i> 
                             </button>`;
                 }
             }

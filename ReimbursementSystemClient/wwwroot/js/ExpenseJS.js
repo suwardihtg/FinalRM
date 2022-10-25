@@ -103,7 +103,7 @@
                             <i class="fa fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger hide-btn" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
-                            <i class="fa fa-trash-alt"></i> 
+                            <i class="fa fa-trash"></i> 
                             </button>
                             <button type="button" class="btn btn-info hide-btn" data-toggle="modal"
                             onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">
@@ -191,7 +191,7 @@ function Submit() {
         success: function (result) {
             Swal.fire(
                 'Good job!',
-                'Your data has been Submitted!',
+                'Your data has been submitted!',
                 'success',    
             ).then((result2) => {
                 if (result2) {

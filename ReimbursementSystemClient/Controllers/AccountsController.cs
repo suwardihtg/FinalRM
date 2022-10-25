@@ -33,6 +33,7 @@ namespace ReimbursementSystemClient.Controllers
             var email = token.Claims.First(c => c.Type == "email").Value;
             var id = token.Claims.First(c => c.Type == "nameid").Value;
             var role = token.Claims.First(c => c.Type == "unique_name").Value;
+            var name = token.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").Value;
 
             if (jwtToken.Token == null)
             {
@@ -44,8 +45,20 @@ namespace ReimbursementSystemClient.Controllers
             HttpContext.Session.SetString("Email", email);
             HttpContext.Session.SetString("EmployeeId", id);
             HttpContext.Session.SetString("Role", role);
+            HttpContext.Session.SetString("Name", name);
 
-            return Json(Url.Action("Reimbusment", "Reimbusments"));
+            if (role == "Manager")
+            {
+                return Json(Url.Action("Dashboard", "Manager"));
+            }
+            else if (role == "Finance")
+            {
+                return Json(Url.Action("FDashboard", "Finances"));
+            }
+            else
+            {
+                return Json(Url.Action("Reimbusment", "Reimbusments"));
+            }
         }
 
         public IActionResult Logout()
