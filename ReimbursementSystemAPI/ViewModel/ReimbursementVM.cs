@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.ViewModel
 {
-    public class ReimbusmentVM
+    public class ReimbursementVM
     {
         public string EmployeeId { get; set; }
-        public DateTime Submitted_Date { get; set; }
+        public DateTime SubmittedDate { get; set; }
     }
 }

@@ -10,26 +10,26 @@
     <div class="container-fluid">
         <!-- row -->
         <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Request</h4>
+            <div class="card-header" style="justify-content: center">
+                <h4 class="card-title">Request Form</h4>
             </div>
             <div class="card-body">
                 <form class="needs-validation" enctype="multipart/form-data" novalidate>
                     <div class="row date-input">
                         <div class="form-group col-xl-6">
-                            <label>Receipt Date <span class="text-danger">*</span></label>
-                            <input type="date" name="datepicker" class="form-control" id="Receipt_Date" placeholder="Receipt Date" required>
+                            <label>Request Date <span class="text-danger">*</span></label>
+                            <input type="date" name="datepicker" class="form-control" id="RequestDate" placeholder="Request Date" required>
                         </div>
                         <div class="form-group col-xl-3">
                             <div class="example">
                                 <p class="mb-1">From <span class="text-danger">*</span> </p>
-                                <input type="date" name="datepicker1" class="form-control" id="Start_Date" placeholder="Date From" required>
+                                <input type="date" name="datepicker1" class="form-control" id="StartDate" placeholder="Date From" required>
                             </div>
                         </div>
                         <div class="form-group col-xl-3">
                             <div class="example">
                                 <p class="mb-1">To <span class="text-danger">*</span> </p>
-                                <input type="date" name="datepicker2" class="form-control" id="End_Date" placeholder="Date To" required>
+                                <input type="date" name="datepicker2" class="form-control" id="EndDate" placeholder="Date To" required>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="form-group col-xl-6">
                             <label for="Category">Category <span class="text-danger">*</span> </label>
                             <select id="Category" class="form-control form-control" required>
-                                <option disabled selected="selected" value="">Choose...</option>
+                                <option disabled selected="selected" value="">Choose Category</option>
                                 <option value="0">Transportation</option>
                                 <option value="1">Parking</option>
                                 <option value="2">Medical</option>
@@ -56,14 +56,20 @@
                         </div>
                     </div>
 
-                    <div class="row payee-travel-input">
-                        <div class="form-group col-xl-6">
-                            <label for="inputState">Travel destination State</label>
-                            <input type="text" class="form-control input-default " placeholder="Travel destination State" id="Destination">
+                    <br/>
+                    <label>Payment <span class="text-danger">*</span></label>
+                    <div class="row payment-input">
+                        <div class="form-group col-xl-4">
+                            <label for="inputState">Account Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control input-default " placeholder="" id="AccountNumber" required>
                         </div>
-                        <div class="form-group col-xl-6">
-                            <label for="Payee">Payee <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control input-default " placeholder="Who recive the payment" id="Payee" required>
+                        <div class="form-group col-xl-4">
+                            <label for="inputState">Bank Name</label>
+                            <input type="text" class="form-control input-default " placeholder="" id="BankName">
+                        </div>
+                        <div class="form-group col-xl-4">
+                            <label for="Payee">Account Holder Name</label>
+                            <input type="text" class="form-control input-default " placeholder="Who receive the payment" id="AccountName">
                         </div>
                     </div>
 
@@ -85,7 +91,6 @@
                             </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary Save-Exit" type="button" onclick="return ValidateEmployee(1)">Save and Exit</button>
-                                @*<button class="btn btn-primary" type="button" onclick="return ValidateEmployee(2)">Add Another</button>*@
                                 <button class="btn btn-primary" type="button" onclick="return Cancel()">Cancel</button>
                             </div>
                         </div>

@@ -43,7 +43,7 @@
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -56,13 +56,10 @@
                 }
             },
             {
-                "data": "purpose"
-            },
-            {
                 "data": null,
                 "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
-                            onclick="getData('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fa fa-info-circle"></i> 
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
@@ -110,7 +107,7 @@ function Reject(expenseid) {
                     obj.description = result2.description;
                     obj.total = result2.total;
                     obj.employeeId = result2.employeeId;
-                    obj.status = 8;
+                    obj.status = 6;
                     console.log(obj)
                     $.ajax({
                         url: "/Expenses/Approval/" + 5,
@@ -164,7 +161,7 @@ function Approve(expenseid) {
                     obj.description = result.description;
                     obj.total = result.total;
                     obj.employeeId = result.employeeId;
-                    obj.status = 6;
+                    obj.status = 4;
                     console.log(obj)
                     $.ajax({
                         url: "/Expenses/Approval/" + 6,
@@ -192,6 +189,144 @@ function Approve(expenseid) {
     })
 }
 
+function Payment(expenseid) {
+    swal({
+        title: "Comfirm payment?",
+        text: "You won't be able to revert this!",
+        type: "info",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: "slide-from-top",
+        inputPlaceholder: "Write something"
+    }).then((result) => {
+        console.log(result)
+        if (result.value) {
+            $.ajax({
+                url: "/Expenses/Get/" + expenseid,
+                type: "Get",
+                success: function (result) {
+                    var obj = new Object();
+                    obj.expenseId = expenseid;
+                    obj.approver = result.approver;
+                    obj.commentManager = result.commentManager;
+                    obj.commentFinace = result.commentFinace;
+                    obj.purpose = result.purpose;
+                    obj.description = result.description;
+                    obj.total = result.total;
+                    obj.employeeId = result.employeeId;
+                    obj.status = 7;
+                    console.log(obj)
+                    $.ajax({
+                        url: "/Expenses/Approval/" + 8,
+                        type: "Put",
+                        'data': obj,
+                        'dataType': 'json',
+                        success: function (result2) {
+                            Swal.fire(
+                                'Reimbursement Complete!',
+                                'Your data has been saved.',
+                                'success'
+                            )
+                            table.ajax.reload();
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        }
+                    })
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
+        $.LoadingOverlay("show");
+        setTimeout(function () {
+            $.LoadingOverlay("hide");
+        }, 3000);
+    })
+}
+
+function PaymentTable() {
+    $('.status').html("Action");
+
+    if ($.fn.DataTable.isDataTable('#tabelExpense')) {
+        $('#tabelExpense').DataTable().destroy();
+    }
+    $('#tabelExpense tbody').empty();
+
+    $(".column-tab").html(column());
+
+    $("#tabelExpense").DataTable({
+        dom: 'lBfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'print',
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
+            }
+        ],
+        responsive: true,
+        "ajax": {
+            "url": "/Expenses/GetExpenseFinancePayment",
+            "type": "GET",
+            "datatype": "json",
+            dataSrc: ""
+        },
+        "columnDefs": [
+            { "className": "dt-center", "targets": "_all" }
+        ],
+        "columns": [
+            {
+                "data": "expenseId"
+            },
+            {
+                "data": "name"
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return dateConversion(row["date"]);
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    if (row["total"] == null) {
+                        return "Rp. " + 0
+                    }
+                    return "Rp." + row["total"];
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<button type="button" class="btn btn-primary" data-toggle="modal" 
+                            onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
+                            <i class="fa fa-info-circle"></i> 
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                            onclick="Payment('${row['expenseId']}')" data-placement="top" title="Confirm Payment Complete">
+                            <i class="fa fa-credit-card"></i>`;
+                }
+            }
+        ],
+    });
+
+}
+
 function RejectTable() {
     $('.status').html("Action");
 
@@ -203,27 +338,26 @@ function RejectTable() {
     $(".column-tab").html(column());
 
     $("#tabelExpense").DataTable({
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
         buttons: [
             {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
             },
             {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
             },
             {
                 extend: 'print',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4]
-                }
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
             }
-
         ],
         responsive: true,
         "ajax": {
@@ -243,10 +377,9 @@ function RejectTable() {
                 "data": "name"
             },
             {
-                //ganti submited date
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -261,16 +394,6 @@ function RejectTable() {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    if (row["description"] == null) {
-                        return "No purpose"
-                    }
-                    return row["purpose"];
-                }
-
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fa fa-info-circle"></i> 
@@ -278,13 +401,7 @@ function RejectTable() {
                 }
             }
         ],
-        initComplete: function () {
-            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
-            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
-            $('.buttons-print').html('<i class="fa fa-print" />')
-        }
     });
-    
 }
 
 function RequestTable() {
@@ -298,27 +415,26 @@ function RequestTable() {
     $(".column-tab").html(column());
 
     $("#tabelExpense").DataTable({
-        dom: 'Bfrtip',
+        dom: 'lBfrtip',
         buttons: [
             {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3]
-                }
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
             },
             {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1, 2, 3]
-                }
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
             },
             {
                 extend: 'print',
-                exportOptions: {
-                    columns: [0, 1, 2, 3]
-                }
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
             }
-
         ],
         responsive: true,
         "ajax": {
@@ -338,10 +454,9 @@ function RequestTable() {
                 "data": "name"
             },
             {
-                //ganti submited date
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -356,40 +471,21 @@ function RequestTable() {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    if (row["description"] == null) {
-                        return "No purpose"
-                    }
-                    return row["purpose"];
-                }
-
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
                     return `<button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="getData('${row['expenseId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
-                            <i class="fas fa-info-circle"></i> 
-                            </button>
-                            <button type="button" class="btn btn-info"
-                            onclick="EditExpense('${row['expenseId']}')" title="Open Form" >
-                            <i class="fas fa-search-plus"></i>
+                            <i class="fa fa-info-circle"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
                             onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
-                            <i class="far fa-times-circle"></i>
+                            <i class="fa fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-info" data-toggle="modal" 
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
-                            <i class="far fa-check-circle"></i>
+                            <i class="fa fa-check-circle"></i>
                             </button>`;
                 }
             }
         ],
-        initComplete: function () {
-            $('.buttons-excel').html('<i class="fa fa-file-excel-o" />')
-            $('.buttons-pdf').html('<i class="fa fa-file-pdf-o" />')
-            $('.buttons-print').html('<i class="fa fa-print" />')
-        }
     });
     
 }

@@ -110,6 +110,18 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpGet("ExpenseDataFinancesPayment")]
+        public ActionResult GetExpenseFinancesPayment()
+        {
+            var result = expenseRepository.GetExpenseFinancePayment();
+
+            if (result.Count() != 0)
+            {
+                return Ok(result);
+            }
+            return NotFound(result);
+        }
+
         [HttpPut("Approval/{code}")]
         public ActionResult Approval(ExpenseVM expenseVM, int code)
         {
@@ -132,9 +144,9 @@ namespace ReimbursementSystemAPI.Controllers
                         expenseRepository.NotifApproveF(expenseVM.ExpenseId);
                         break;
                     /*case 7:
-                        expenseRepository.NotifRejectSM(expenseVM.ExpenseId);
-                        break;
-                    case 8:
+                        expenseRepository.NotifPaid(expenseVM.ExpenseId);
+                        break;*/
+                    /*case 8:
                         expenseRepository.NotifApproveSM(expenseVM.ExpenseId);
                         break;
                     case 9:

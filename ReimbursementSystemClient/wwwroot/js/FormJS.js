@@ -24,11 +24,11 @@ function SaveExit() {
     formData.append("Attachments", $('#Attachments')[0].files[0]);
 
     var obj = new Object();
-    obj.Receipt_Date = $("#Receipt_Date").val();
-    obj.Start_Date = $("#Start_Date").val();
-    obj.End_Date = $("#End_Date").val();
+    obj.RequestDate = $("#RequestDate").val();
+    obj.StartDate = $("#StartDate").val();
+    obj.EndDate = $("#EndDate").val();
+    obj.AccountNumber = $("#AccountNumber").val();
     obj.Category = $("#Category").val();
-    obj.Payee = $("#Payee").val();
     obj.Description = $("#Description").val();
     obj.Total = $("#Total").val();
     obj.Attachments = convertimagefile($("#Attachments").val())
@@ -72,14 +72,13 @@ function Update() {
             var data = $('#Attachments')[0].files[0]
             formData.append("Attachments", $('#Attachments')[0].files[0]);
 
-
             var obj = new Object();
             obj.fromId = result;
-            obj.Receipt_Date = $("#Receipt_Date").val();
-            obj.Start_Date = $("#Start_Date").val();
-            obj.End_Date = $("#End_Date").val();
+            obj.RequestDate = $("#RequestDate").val();
+            obj.StartDate = $("#StartDate").val();
+            obj.EndDate = $("#EndDate").val();
             obj.Category = $("#Category").val();
-            obj.Payee = $("#Payee").val();
+            obj.AccountNumber = $("#AccountNumber").val();
             obj.Description = $("#Description").val();
             obj.Total = $("#Total").val();
             obj.Attachments = convertimagefile($("#Attachments").val());
@@ -103,7 +102,7 @@ function Update() {
     })
 }
 
-function AddAnother() {
+/*function AddAnother() {
     var obj = new Object();
     var formData = new FormData();
     var data = $('#Attachments')[0].files[0]
@@ -133,7 +132,7 @@ function AddAnother() {
         }
     })
     return false;
-}
+}*/
 
 function Cancel() {
     window.location.href = "/Reimbusments/Expense"
@@ -154,11 +153,12 @@ $(document).ready(function () {
                 type: "Get",
                 data: "",
                 success: function (result) {
-                    $("#Receipt_Date").attr("value", dateInputConversion(result.receipt_Date))
-                    $("#Start_Date").attr("value", dateInputConversion(result.start_Date))
-                    $("#End_Date").attr("value", dateInputConversion(result.end_Date))
+                    console.log(result);
+                    $("#RequestDate").attr("value", dateInputConversion(result.receiptDate))
+                    $("#StartDate").attr("value", dateInputConversion(result.startDate))
+                    $("#EndDate").attr("value", dateInputConversion(result.endDate))
                     Category(result.category)
-                    $("#Payee").attr("value", result.payee)
+                    $("AccountNumber").attr("value", result.accountNumber)
                     $("#Description").html(result.description)
                     $("#Total").attr("value", result.total)
                 },

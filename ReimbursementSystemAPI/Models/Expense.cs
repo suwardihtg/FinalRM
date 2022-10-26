@@ -15,12 +15,9 @@ namespace ReimbursementSystemAPI.Models
         [Key]
         public int ExpenseId { get; set; }
         public Status Status { get; set; }
-        public DateTime? Submitted { get; set; }
-        public string Approver { get; set; }
-        public string Description { get; set; }
+        public DateTime? SubmittedDate { get; set; }
         public string CommentManager { get; set; }
-        public string CommentFinace { get; set; }
-        public string Purpose { get; set; }
+        public string CommentFinance { get; set; }
         public float? Total { get; set; }
 
         [JsonIgnore]
@@ -37,18 +34,13 @@ namespace ReimbursementSystemAPI.Models
     public enum Status
     {
         Draft,
-        Posted,
-        Approved,
-        Rejected,
+        Submitted,
         Canceled,
         ApprovedByManager,
         ApprovedByFinance,
         RejectedByManager,
-        RejectedByFinance
-        /*OnManager2,
-        ApprovedByManager2,
-        OnManager3,
-        ApprovedByManager3*/
+        RejectedByFinance,
+        Paid
     }
 
 }

@@ -3,7 +3,6 @@
             <th scope="col" class="text-light text-center">Name</th>
             <th scope="col" class="text-light text-center">Date Request</th>
             <th scope="col" class="text-light text-center">Total</th>
-            <th scope="col" class="text-light text-center">Purpose</th>
             <th scope="col" class="text-light text-center status">Action</th>`
 }
 
@@ -23,29 +22,19 @@ function status(stat) {
         case 0:
             return "Draft";
         case 1:
-            return "Posted";
+            return "Submitted";
         case 2:
-            return "Approved";
-        case 3:
-            return "Rejected";
-        case 4:
             return "Canceled";
-        case 5:
+        case 3:
             return "Approved by Manager, <br> Waiting for Finance Approval";
-        case 6:
-            return "Approved by Finance";
-        case 7:
+        case 4:
+            return "Approved by Finance, <br> Waiting for Payment";
+        case 5:
             return "Rejected by Manager"; 
-        case 8:
+        case 6:
             return "Rejected by Finance";
-        /*case 9:
-            return "Approved By Manager <br> Waiting for Senior Manager Approval";
-        case 10:
-            return "Approved By Senior Manager <br> Waiting for Finance Approval";
-        case 11:
-            return "Approved By Senior Manager <br> Waiting for Director Approval ";
-        case 12:
-            return "Approved By Director <br> Waiting for Finance Approval";*/
+        case 7:
+            return "Paid";
         default:
             return "Draft";
             break;
@@ -63,15 +52,29 @@ function EditExpense(expenseid) {
     $.ajax({
         url: "/Expenses/EditExpense/" + expenseid,
         success: function (result) {
-            console.log(result)
+            console.log(result);
             window.location.href = "/Reimbusments/Expense";
-
         },
         error: function (error) {
             console.log(error)
         }
     })
 }
+
+/*function EditForm(formid) {
+    console.log(formid)
+    $.ajax({
+        url: "/Forms/EditForm/" + formid,
+        success: function (result) {
+            console.log(result)
+            window.location.href = "/Reimbusments/Form";
+
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}*/
 
 function getData(id) {
     $.ajax({
@@ -83,7 +86,7 @@ function getData(id) {
             text =
                 `
                 <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">ExpenseId : <span id="Eid"> ${result.expenseId} </span>  </label>
+                    <label for="inputState">Request Id : <span id="Eid"> ${result.expenseId} </span>  </label>
                 </div>
 
                 <div class="form-group col-xl-6 col-sm-6 text-dark">
@@ -91,10 +94,10 @@ function getData(id) {
                 </div>
 
                 <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
+                    <label for="inputState">Total : <span id="total"> Rp.${result.total} </span>  </label>
                 </div>
                 <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">Submited : <span id="date"> ${dateConversion(result.submitted)} </span>  </label>
+                    <label for="inputState">Date : <span id="date"> ${dateConversion(result.submittedDate)} </span>  </label>
                 </div>`
             $("#info").html(text);
             $("#desc").html(result.description)
@@ -172,7 +175,7 @@ function tableformdetail(expenseid) {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["receipt_Date"])
+                    return dateConversion(row["requestDate"])
                 }
             },
             {
@@ -192,16 +195,7 @@ function tableformdetail(expenseid) {
                             break;
                     }
                 }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    if (row["payee"] == null) {
-                        return "~Empty~"
-                    }
-                    return row["payee"];
-                }
-            },  
+            }, 
             {
                 "data": null,
                 "render": function (data, type, row) {
@@ -211,6 +205,16 @@ function tableformdetail(expenseid) {
                     return "Rp." + row["total"];
                 }
             },
+
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    /*if (row["payee"] == null) {
+                        return "~Empty~"
+                    }*/
+                    return row["accountNumber"];
+                }
+            }, 
             {
                 "data": null,
                 "render": function (data, type, row) {
@@ -279,6 +283,27 @@ function AllTable() {
 
     $("#tabelExpense").DataTable({
         responsive: true,
+        dom: 'lBfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'print',
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
+            }
+        ],
         "ajax": {
             "url": "/Expenses/GetExpensePosted",
             "type": "GET",
@@ -296,10 +321,9 @@ function AllTable() {
                 "data": "name"
             },
             {
-                //ganti submited date
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -310,16 +334,6 @@ function AllTable() {
                     }
                     return "Rp." + row["total"];
                 }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    if (row["description"] == null) {
-                        return "No purpose"
-                    }
-                    return row["purpose"];
-                }
-
             },
             {
                 "data": null,

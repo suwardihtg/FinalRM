@@ -114,6 +114,13 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetExpenseFinancePayment()
+        {
+            var result = await expensesRepository.GetExpenseFinancePayment();
+            return Json(result);
+        }
+
 
         //<!----------------- Manager ------------------->
 
@@ -124,7 +131,7 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public async Task<JsonResult> GetExpenseSManager()
         {
             var result = await expensesRepository.GetExpenseSManager();
@@ -136,7 +143,7 @@ namespace ReimbursementSystemClient.Controllers
         {
             var result = await expensesRepository.GetExpenseDirector();
             return Json(result);
-        }
+        }*/
 
         [HttpGet]
         public async Task<JsonResult> GetExpenseManagerReject()

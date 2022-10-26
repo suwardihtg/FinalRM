@@ -113,6 +113,19 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
+        public async Task<List<ExpenseManager>> GetExpenseFinancePayment()
+        {
+            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
+
+            using (var response = await httpClient.GetAsync(request + "ExpenseDataFinancesPayment/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
+
+            }
+            return entitiesNew;
+        }
+
         public HttpStatusCode ApprovalFinance(ExpenseVM entity, string email, int code)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
@@ -135,7 +148,7 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
-        public async Task<List<ExpenseManager>> GetExpenseSManager()
+        /*public async Task<List<ExpenseManager>> GetExpenseSManager()
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
 
@@ -157,7 +170,7 @@ namespace ReimbursementSystemClient.Repository.Data
                 entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
             }
             return entitiesNew;
-        }
+        }*/
 
         public async Task<List<ExpenseManager>> GetExpenseManagerReject()
         {

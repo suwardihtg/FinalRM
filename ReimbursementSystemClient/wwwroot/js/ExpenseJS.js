@@ -4,7 +4,7 @@
         success: function (result) {
             $(".expense-title span").html(result);
 
-            $.ajax({
+            /*$.ajax({
                 url: "/Expenses/GetExpense",
                 type: "Get",
                 success: function (result) {
@@ -16,7 +16,7 @@
                 error: function (error) {
                     $("#Approver").html("~~")
                 }
-            })
+            })*/
 
             table = $("#Formtable").DataTable({
                 responsive: true,
@@ -34,6 +34,12 @@
                         className: 'buttonHide fa fa-download btn-default',
                         exportOptions: { orthogonal: 'export' }
                     },
+                    {
+                        extend: 'print',
+                        text: '',
+                        className: 'buttonHide fa fa-print btn-default',
+                        exportOptions: { orthogonal: 'export' }
+                    }
                 ],
                 "ajax": {
                     "url": "/forms/getform/" + result,
@@ -47,7 +53,7 @@
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                            return dateConversion(row["receipt_Date"])
+                            return dateConversion(row["requestDate"])
                         }
                     },
                     {
@@ -71,10 +77,10 @@
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                            if (row["payee"] == null) {
+                            /*if (row["payee"] == null) {
                                 return "~Empty~"
-                            }
-                            return row["payee"];
+                            }*/
+                            return row["accountNumber"];
                         }
                     },
                     {
@@ -105,7 +111,7 @@
                             <button type="button" class="btn btn-danger hide-btn" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i> 
                             </button>
-                            <button type="button" class="btn btn-info hide-btn" data-toggle="modal"
+                            <button type="button" class="btn btn-primary hide-btn" data-toggle="modal"
                             onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">
                             <i class="fa fa-edit"></i>
                             </button>`;
@@ -120,14 +126,14 @@
                         success: function (result) {
                             console.log(result)
                             $("#Status").html(status(result.status))
-                            if ($("#Approver").text() == "") {
+                            /*if ($("#Approver").text() == "") {
                                 $("#Approver").html(result.approver)
-                            }
+                            }*/
                             $("#Description").html(result.description)
-                            $("#Purpose").attr("value", result.purpose)
+                            //$("#Purpose").attr("value", result.purpose)
                             if (result.status != 0) {
                                 $("#Description").prop('disabled', true);
-                                $("#Purpose").prop('disabled', true);
+                                //$("#Purpose").prop('disabled', true);
                                 $(".hide-btn").hide();
                             } else {
                                 $("#Description").removeAttr('disabled');
@@ -177,9 +183,9 @@
 
 function Submit() {
     var obj = new Object();
-    obj.approver = $("#Approver").text();
+    //obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
-    obj.purpose = $("#Purpose").val();
+    //obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
     obj.status = 1;
@@ -216,9 +222,9 @@ function Submit() {
 
 function SaveExit() {
     var obj = new Object();
-    obj.approver = $("#Approver").text();
+    //obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
-    obj.purpose = $("#Purpose").val();
+    //obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
     obj.status = 0;
@@ -291,13 +297,13 @@ function getDataForm(id) {
             text =
                 `
                 <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Receipt Date : <span id="date"> ${dateConversion(result.receipt_Date)} </span>  </label>
+                    <label for="inputState">Date : <span id="date"> ${dateConversion(result.requestDate)} </span>  </label>
                 </div>
                 <div class="form-group col-xl-6 col-sm-6">
                     <label for="inputState">Category : <span id="cat"> ${cata(result.category)} </span>  </label>
                 </div>
                 <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Payee : <span id="total"> ${result.payee} </span>  </label>
+                    <label for="inputState">Bank Account : <span id="total"> ${result.accountNumber} </span>  </label>
                 </div>
                 <div class="form-group col-xl-6 col-sm-6">
                     <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
@@ -328,9 +334,9 @@ function getDataForm(id) {
 
 function InsertForm() {
     var obj = new Object();
-    obj.approver = $("#Approver").text();
+    //obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
-    obj.purpose = $("#Purpose").val();
+    //obj.purpose = $("#Purpose").val();
     obj.description = $("#Description").val();
     obj.total = $("#Total").val();
     obj.status = 0;

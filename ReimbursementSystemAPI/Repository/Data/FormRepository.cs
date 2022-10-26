@@ -33,9 +33,9 @@ namespace ReimbursementSystemAPI.Repository.Data
             context.SaveChanges();
             Form form = new Form();
             {
-                form.Receipt_Date = fromVM.Receipt_Date;
-                form.Start_Date = fromVM.Start_Date;
-                form.End_Date = fromVM.End_Date;
+                form.RequestDate = fromVM.RequestDate;
+                form.StartDate = fromVM.StartDate;
+                form.EndDate = fromVM.EndDate;
                 form.Attachments = atc.Id;
 
                 switch (fromVM.Category)
@@ -55,10 +55,10 @@ namespace ReimbursementSystemAPI.Repository.Data
                     default:
                         break;
                 }
-                form.Payee = fromVM.Payee;
                 form.Description = fromVM.Description;
                 form.Total = fromVM.Total;
                 form.ExpenseId = fromVM.ExpenseId;
+                form.AccountNumber = fromVM.AccountNumber;
             }
 
             context.Forms.Add(form);
@@ -76,12 +76,11 @@ namespace ReimbursementSystemAPI.Repository.Data
                            select new FormVM()
                            {
                                FormId = b.FormId,
-                               Receipt_Date = b.Receipt_Date,
+                               RequestDate = b.RequestDate,
                                Total = b.Total,
-                               Payee = b.Payee,
-                               Type = b.Type,
                                Category = (int)b.Category,
                                Description = b.Description,
+                               AccountNumber = b.AccountNumber,
                                Attachments = c.FilePath
         };
 
@@ -105,9 +104,9 @@ namespace ReimbursementSystemAPI.Repository.Data
             var data = (from a in context.Forms where a.FormId == fromVM.FormId
                         select new { form = a}).Single();
             var form = data.form;
-            form.Receipt_Date = fromVM.Receipt_Date;
-            form.Start_Date = fromVM.Start_Date;
-            form.End_Date = fromVM.End_Date;
+            form.RequestDate = fromVM.RequestDate;
+            form.StartDate = fromVM.StartDate;
+            form.EndDate = fromVM.EndDate;
             switch (fromVM.Category)
             {
                 case 0:
@@ -125,9 +124,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                 default:
                     break;
             }
-            form.Payee = fromVM.Payee;
             form.Description = fromVM.Description;
             form.Total = fromVM.Total;
+            form.AccountNumber = fromVM.AccountNumber;
             //form.Attachments = fromVM.Attachments;
             ////form.ExpenseId = fromVM.ExpenseId;
 

@@ -43,7 +43,7 @@
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -54,9 +54,6 @@
                     }
                     return "Rp." + row["total"];
                 }
-            },
-            {
-                "data": "purpose"
             },
             {
                 "data": null,
@@ -107,7 +104,7 @@ function Reject(expenseid) {
                     obj.description = result2.description;
                     obj.total = result2.total;
                     obj.employeeId = result2.employeeId;
-                    obj.status = 7;
+                    obj.status = 5;
                     console.log(obj)
                     $.LoadingOverlay("show");
                     setTimeout(function () {
@@ -137,60 +134,6 @@ function Reject(expenseid) {
         }
 
     })
-    /*Swal.fire({
-        title: 'Are you sure?',
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Reject it!'
-    }).then((result) => {
-        console.log(result)
-        if (result.value) {
-            $.ajax({
-                url: "/Expenses/Get/" + expenseid,
-                type: "Get",
-                success: function (result) {
-                    var obj = new Object();
-                    obj.expenseId = expenseid;
-                    obj.approver = result.approver;
-                    obj.commentManager = result.commentManager;
-                    obj.commentFinace = result.commentFinace;
-                    obj.purpose = result.purpose;
-                    obj.description = result.description;
-                    obj.total = result.total;
-                    obj.employeeId = result.employeeId;
-                    obj.status = 7;
-                    console.log(obj)
-
-                    $.LoadingOverlay("show");
-                    setTimeout(function () {
-                        $.ajax({
-                            url: "/Expenses/Approval/" + 4,
-                            type: "Put",
-                            'data': obj,
-                            'dataType': 'json',
-                            success: function (result2) {
-                                $.LoadingOverlay("hide");
-                                table.ajax.reload();
-                                console.log(result2);
-                            },
-                            error: function (error) {
-                                console.log(error)
-                            }
-                        })
-                    });
-
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            })
-
-
-        }
-
-    })*/
 }
 
 function Approve(expenseid) {
@@ -218,10 +161,7 @@ function Approve(expenseid) {
                     obj.description = result.description;
                     obj.total = result.total;
                     obj.employeeId = result.employeeId;
-                    obj.status = 5;
-                    /*if (result.total > 5000000) {
-                        obj.status = 9;
-                    }*/ 
+                    obj.status = 3;
                     console.log(obj)
 
                     $.LoadingOverlay("show");
@@ -291,6 +231,27 @@ function RejectTable() {
 
     $("#tabelExpense").DataTable({
         responsive: true,
+        dom: 'lBfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'print',
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
+            }
+        ],
         "ajax": {
             "url": "/Expenses/GetExpenseManagerReject",
             "type": "GET",
@@ -308,10 +269,9 @@ function RejectTable() {
                 "data": "name"
             },
             {
-                //ganti submited date
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -322,16 +282,6 @@ function RejectTable() {
                     }
                     return "Rp." + row["total"];
                 }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    if (row["description"] == null) {
-                        return "No purpose"
-                    }
-                    return row["purpose"];
-                }
-
             },
             {
                 "data": null,
@@ -359,6 +309,27 @@ function RequestTable() {
 
     $("#tabelExpense").DataTable({
         responsive: true,
+        dom: 'lBfrtip',
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: '',
+                className: 'buttonHide fa fa-copy btn-primary',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'excelHtml5',
+                text: '',
+                className: 'buttonHide fa fa-download btn-default',
+                exportOptions: { orthogonal: 'export' }
+            },
+            {
+                extend: 'print',
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
+            }
+        ],
         "ajax": {
             "url": "/Expenses/GetExpenseManager",
             "type": "GET",
@@ -376,10 +347,9 @@ function RequestTable() {
                 "data": "name"
             },
             {
-                //ganti submited date
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["dateTime"]);
+                    return dateConversion(row["date"]);
                 }
             },
             {
@@ -390,16 +360,6 @@ function RequestTable() {
                     }
                     return "Rp." + row["total"];
                 }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
-                    if (row["description"] == null) {
-                        return "No purpose"
-                    }
-                    return row["purpose"];
-                }
-
             },
             {
                 "data": null,

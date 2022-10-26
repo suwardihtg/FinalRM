@@ -14,15 +14,13 @@ namespace ReimbursementSystemAPI.Models
     {
         [Key]
         public int FormId { get; set; }
-        public DateTime? Receipt_Date { get; set; }
-        public DateTime? Start_Date { get; set; }
-        public DateTime? End_Date { get; set; }
+        public DateTime? RequestDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public Category? Category { get; set; }
-        public string Payee { get; set; }
-        public string Destination { get; set; }
-        public string Type { get; set; }
         public string Description { get; set; }
         public float? Total { get; set; }
+        public int AccountNumber { get; set; }
         public int Attachments { get; set; }
 
         [JsonIgnore]

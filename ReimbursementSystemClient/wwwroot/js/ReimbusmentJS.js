@@ -276,6 +276,12 @@ $(document).ready(function () {
                 className: 'buttonHide fa fa-download btn-default',
                 exportOptions: { orthogonal: 'export' }
             },
+            {
+                extend: 'print',
+                text: '',
+                className: 'buttonHide fa fa-print btn-default',
+                exportOptions: { orthogonal: 'export' }
+            }
         ],
         "ajax": {
             "url": "/Expenses/GetExpense",
@@ -288,7 +294,7 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    return dateConversion(row["submitted"]);
+                    return dateConversion(row["submittedDate"]);
                 }
             },
             {
@@ -309,15 +315,6 @@ $(document).ready(function () {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    if (row["purpose"] == null) {
-                        return "No Purpose"
-                    }
-                    return row["purpose"];
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, row) {
                     return status(row["status"])
                 }
             },
@@ -331,8 +328,8 @@ $(document).ready(function () {
                             <button type="button" class="btn btn-danger" data-toggle="modal" onclick="Delete('${row['expenseId']}')" data-placement="top" title="Delete">
                             <i class="fa fa-trash"></i>
                             </button>
-                            <button type="button" class="btn btn-primary"
-                            onclick="EditExpense('${row['expenseId']}')" title="Edit" >
+                            <button type="button" class="btn btn-primary" 
+                            onclick="EditExpense('${row['expenseId']}')" title="Edit">
                             <i class="fa fa-edit"></i>
                             </button>`
                     var nondraft = `<button type="button" class="btn btn-primary" data-toggle="modal" 
@@ -373,7 +370,7 @@ function Delete(id) {
         obj.description = $("#Description").val();
         obj.total = $("#Total").val();
         obj.expenseId = id;
-        obj.status = 4;
+        obj.status = 2;
         $.ajax({
             url: "/Expenses/Submit/" + 12,
             type: "Put",

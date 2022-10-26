@@ -17,8 +17,6 @@ namespace ReimbursementSystemAPI.Models
         [Key]
         public string EmployeeId { get; set; }
 
-        [Required, Index(IsUnique = true)]
-        public string NIK { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -27,7 +25,6 @@ namespace ReimbursementSystemAPI.Models
         [DataType(DataType.PhoneNumber)]
         [Required, Index(IsUnique = true)]
         public string Phone { get; set; }
-        public DateTime BirthDate { get; set; }
         public float? Salary { get; set; }
 
         public string ManagerId { get; set; }

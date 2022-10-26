@@ -27,51 +27,34 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             Expense expense = new Expense();
             {
-                expense.Approver = expenseVM.Approver;
-                expense.Description = expenseVM.Description;
                 expense.Total = expenseVM.Total;
-                expense.Submitted = (expenseVM.Submitted == null) ? DateTime.Now : expenseVM.Submitted;
+                expense.SubmittedDate = (expenseVM.SubmittedDate == null) ? DateTime.Now : expenseVM.SubmittedDate;
                 switch (expenseVM.Status)
                 {
                     case 0:
                         expense.Status = Status.Draft;
                         break;
                     case 1:
-                        expense.Status = Status.Posted;
+                        expense.Status = Status.Submitted;
                         break;
                     case 2:
-                        expense.Status = Status.Approved;
-                        break;
-                    case 3:
-                        expense.Status = Status.Rejected;
-                        break;
-                    case 4:
                         expense.Status = Status.Canceled;
                         break;
-                    case 5:
+                    case 3:
                         expense.Status = Status.ApprovedByManager;
                         break;
-                    case 6:
+                    case 4:
                         expense.Status = Status.ApprovedByFinance;
                         break;
-                    case 7:
+                    case 5:
                         expense.Status = Status.RejectedByManager;
                         break;
-                    case 8:
+                    case 6:
                         expense.Status = Status.RejectedByFinance;
                         break;
-                    /*case 9:
-                        expense.Status = Status.OnManager2;
+                    case 7:
+                        expense.Status = Status.Paid;
                         break;
-                    case 10:
-                        expense.Status = Status.ApprovedByManager2;
-                        break;
-                    case 11:
-                        expense.Status = Status.OnManager3;
-                        break;
-                    case 12:
-                        expense.Status = Status.ApprovedByManager3;
-                        break;*/
                     default:
                         break;
                 }
@@ -98,37 +81,28 @@ namespace ReimbursementSystemAPI.Repository.Data
             switch (code)
             {
                 case 1:
-                    history = "Expense Submitted ";
+                    history = "Request Submitted";
                     break;
                 case 2:
-                    history = "Draft Saved ";
+                    history = "Draft Saved";
                     break;
                 case 3:
-                    history = "Rejected by your Manager ";
+                    history = "Rejected by Manager";
                     break;
                 case 4:
-                    history = "Accepted by your Manager ";
+                    history = "Accepted by Manager";
                     break;
                 case 5:
-                    history = "Rejected by Finance ";
+                    history = "Rejected by Finance";
                     break;
                 case 6:
-                    history = "Accepted by Finance ";
-                    break;
-                /*case 7:
-                    history = "Rejected by Senior Manager ";
+                    history = "Accepted by Finance";
                     break;
                 case 8:
-                    history = "Accepted by Senior Manager ";
+                    history = "Paid";
                     break;
                 case 9:
-                    history = "Rejected by Director ";
-                    break;
-                case 10:
-                    history = "Accepted by Director ";*/
-                    //break;
-                case 8:
-                    history = "Deleted ";
+                    history = "Deleted";
                     break;
                 default:
                     break;
@@ -142,7 +116,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                 {
                     expenseHistory.Date = DateTime.Now;
                     expenseHistory.Message = history + aDate.ToString("dddd, dd MMMM yyyy HH:mm:ss");
-                    //expenseHistory.Expenses.ExpenseId = expenseVM.ExpenseId;
                     expenseHistory.ExpenseId = expenseVM.ExpenseId;
                 }
                 context.ExpenseHistories.Add(expenseHistory);
@@ -156,12 +129,9 @@ namespace ReimbursementSystemAPI.Repository.Data
                             select new { expenses = b }).Single();
 
             var expense = data.expenses;
-            expense.Approver = expenseVM.Approver;
             expense.CommentManager = expenseVM.CommentManager;
-            expense.CommentFinace = expenseVM.CommentFinace;
-            expense.Submitted = (expenseVM.Submitted == null) ? DateTime.Now : expenseVM.Submitted;
-            expense.Purpose = expenseVM.Purpose;
-            expense.Description = expenseVM.Description;
+            expense.CommentFinance = expenseVM.CommentFinance;
+            expense.SubmittedDate = (expenseVM.SubmittedDate == null) ? DateTime.Now : expenseVM.SubmittedDate;
             expense.Total = expenseVM.Total;
             switch (expenseVM.Status)
             {
@@ -169,41 +139,26 @@ namespace ReimbursementSystemAPI.Repository.Data
                     expense.Status = Status.Draft;
                     break;
                 case 1:
-                    expense.Status = Status.Posted;
+                    expense.Status = Status.Submitted;
                     break;
                 case 2:
-                    expense.Status = Status.Approved;
-                    break;
-                case 3:
-                    expense.Status = Status.Rejected;
-                    break;
-                case 4:
                     expense.Status = Status.Canceled;
                     break;
-                case 5:
+                case 3:
                     expense.Status = Status.ApprovedByManager;
                     break;
-                case 6:
+                case 4:
                     expense.Status = Status.ApprovedByFinance;
                     break;
-                case 7:
+                case 5:
                     expense.Status = Status.RejectedByManager;
                     break;
-                case 8:
+                case 6:
                     expense.Status = Status.RejectedByFinance;
                     break;
-                /*case 9:
-                    expense.Status = Status.OnManager2;
+                case 7:
+                    expense.Status = Status.Paid;
                     break;
-                case 10:
-                    expense.Status = Status.ApprovedByManager2;
-                    break;
-                case 11:
-                    expense.Status = Status.OnManager3;
-                    break;
-                case 12:
-                    expense.Status = Status.ApprovedByManager3;
-                    break;*/
                 default:
                     break;
             }
@@ -240,15 +195,12 @@ namespace ReimbursementSystemAPI.Repository.Data
                            where b.Status != Status.Canceled
                            select new ExpenseVM()
                            {
-                               Approver = (from c in context.Employees where c.EmployeeId == a.ManagerId select c.FirstName + " " + c.LastName).Single().ToString(),
-                               Submitted = b.Submitted,
+                               SubmittedDate = b.SubmittedDate,
                                ExpenseId = b.ExpenseId,
-                               Purpose = b.Purpose,
-                               CommentFinace = b.CommentFinace,
+                               CommentFinance = b.CommentFinance,
                                CommentManager = b.CommentManager,
                                Status = (int)b.Status,
-                               Total = b.Total,
-                               Description = b.Description,
+                               Total = b.Total
                            };
             var data = register.ToList().OrderBy(issue => ( issue.Status, true)); ;
             return data;
@@ -266,10 +218,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
+                              Date = b.SubmittedDate,
+                              Total = b.Total
                           };
             return expense.ToList();
         }
@@ -284,10 +234,25 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
+                              Date = b.SubmittedDate,
+                              Total = b.Total
+                          };
+            return expense.ToList();
+        }
+
+        public IEnumerable<ExpenseManager> GetExpenseFinancePayment()
+        {
+            var expense = from a in context.Employees
+                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
+                          where b.Status == Status.ApprovedByFinance
+                          select new ExpenseManager()
+                          {
+                              Status = (int)b.Status,
+                              EmployeeId = b.EmployeeId,
+                              ExpenseId = b.ExpenseId,
+                              Name = a.FirstName + " " + a.LastName,
+                              Date = b.SubmittedDate,
+                              Total = b.Total
                           };
             return expense.ToList();
         }
@@ -299,59 +264,20 @@ namespace ReimbursementSystemAPI.Repository.Data
         {
             var expense = from a in context.Employees
                           join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                          where b.Status == Status.Posted
+                          where b.Status == Status.Submitted
                           select new ExpenseManager()
                           {
                               Status = (int)b.Status,
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
+                              Date = b.SubmittedDate,
+                              Total = b.Total
                           };
             return expense.ToList();
         }
 
-        /*public IEnumerable<ExpenseManager> GetExpenseSManager()
-        {
-            var expense = from a in context.Employees
-                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                          where b.Status == Status.OnManager2
-                          select new ExpenseManager()
-                          {
-                              Status = (int)b.Status,
-                              EmployeeId = b.EmployeeId,
-                              ExpenseId = b.ExpenseId,
-                              Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
-                          };
-            return expense.ToList();
-        }
-
-        public IEnumerable<ExpenseManager> GetExpenseDirector()
-        {
-            var expense = from a in context.Employees
-                          join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                          where b.Status == Status.OnManager3
-                          select new ExpenseManager()
-                          {
-                              Status = (int)b.Status,
-                              EmployeeId = b.EmployeeId,
-                              ExpenseId = b.ExpenseId,
-                              Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
-                          };
-            return expense.ToList();
-        }*/
-
+        
         public IEnumerable<ExpenseManager> GetExpenseManagerReject()
         {
             var expense = from a in context.Employees
@@ -363,10 +289,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
+                              Date = b.SubmittedDate,
+                              Total = b.Total
                           };
             return expense.ToList();
         }
@@ -385,10 +309,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                               EmployeeId = b.EmployeeId,
                               ExpenseId = b.ExpenseId,
                               Name = a.FirstName + " " + a.LastName,
-                              DateTime = b.Submitted,
-                              Total = b.Total,
-                              Description = b.Description,
-                              Purpose = b.Purpose
+                              Date = b.SubmittedDate,
+                              Total = b.Total
                           };
             return expense.ToList();
         }
@@ -623,185 +545,5 @@ namespace ReimbursementSystemAPI.Repository.Data
             }
             return 3;
         }
-
-
-        //<!----------------- Notif Senior Manager ------------------->
-        /*public int NotifApproveSM(int expenseid)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseid
-                        select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Senior Manager ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Senior Manager <p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $" 【Reimbursment】Senior Manager Approve ";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }*/
-
-        /*public int NotifRejectSM(int expenseid)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseid
-                        select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Senior Manager ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
-            sb.Append($"<br/> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Senior Manager <p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】 Rejected";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }*/
-
-
-
-        //<!----------------- Notif Director ------------------->
-        /*public int NotifApproveD(int expenseid)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseid
-                        select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Director ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Director <p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $" 【Reimbursment】Director Approve ";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }*/
-
-        /*public int NotifRejectD(int expenseid)
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        where b.ExpenseId == expenseid
-                        select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Director ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
-            sb.Append($"<br/> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Director <p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】 Rejected";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }*/
     }
 }

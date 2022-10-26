@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Focus - Bootstrap Admin Dashboard </title>
+    <title>Reimbursement </title>
 
 </head>
 
@@ -53,9 +53,9 @@
                         <tr class="bg-primary column-tab">
                             <th scope="col" class="text-light text-center"> Date </th>
                             <th scope="col" class="text-light text-center"> Category </th>
-                            <th scope="col" class="text-light text-center"> Payee </th>
+                            <th scope="col" class="text-light text-center"> Bank Account Number </th>
                             <th scope="col" class="text-light text-center"> Description </th>
-                            <th scope="col" class="text-light text-center"> Amount </th>
+                            <th scope="col" class="text-light text-center"> Total </th>
                             <th scope="col" class="text-light text-center"> Action </th>
                         </tr>
                     </thead>
@@ -72,7 +72,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-6 text-dark">
-                        <label for="inputState">Status History <i class="fas fa-history"></i></label>
+                        <label for="inputState">Status History <i class="fa fa-history"></i></label>
                         <textarea class="form-control" rows="5" id="History" disabled></textarea>
                     </div>
 
@@ -85,7 +85,7 @@
                             <input id="Total" type="number" class="form-control" placeholder="Rp.0" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" disabled>
                         </div>
                         <div class="mt-4">
-                            <button class="btn btn-success hide-btn" type="button" onclick="return Submit()">Submit Expense</button>
+                            <button class="btn btn-success hide-btn" type="button" onclick="return Submit()">Submit Request</button>
                             @*<button class="btn btn-primary hide-btn" type="button" onclick="return SaveExit()">Save & Exit</button>*@
 
                         </div>
@@ -122,9 +122,10 @@
                                 </div>
                                 <div class="row center">
                                     <div class="text-center col-xl-12">
-                                        <label for="inputState"> Your file </label>
+                                        <label for="inputState"> Attachment </label>
                                         <br />
                                         <img id="attc" src="#" width="180" length="180" />
+                                        <br />
                                     </div>
                                 </div>
                         </div>

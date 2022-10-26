@@ -42,7 +42,7 @@
     <div id="main-wrapper">
 
         <div class="nav-header">
-            <a href="/Reimbusments/Reimbusment" class="brand-logo">
+            <a href="#" class="brand-logo">
                 <img class="logo-abbr" src="~/assets/images/logo.png" alt="">
                 <img class="logo-compact" src="~/assets/images/logo-text.png" alt="">
                 <img class="brand-title" src="~/assets/images/logo-text.png" alt="">
@@ -152,8 +152,21 @@
                                             <i class="icon-envelope-open"></i>
                                             <span class="ml-2">Inbox </span>
                                         </a>*@
+                                    <div class="dropdown-item" style="text-align: center; pointer-events: none">
+                                            <i class="fa fa-user-circle fa-3x"></i>
+                                            <br />
+                                            <br />
+                                            <h5 class="ml-2">@Context.Session.GetString("Name")</h5>
+                                            <h6 class="ml-2">@Context.Session.GetString("Role")</h6>
+                                    </div>
+                                    @*<a href="" class="dropdown-item" onclick="return false;">
+                                        <i class="fa fa-user-circle" style="visibility: hidden"></i>
+                                        <span class="ml-2">@Context.Session.GetString("Role")</span>
+                                    </a>
+                                    <br />*@
+                                    <br />
                                     <a href="@Url.Action("Logout", "Accounts")" class="dropdown-item">
-                                        <i class="icon-key"></i>
+                                        <i class="fa fa-sign-out"></i>
                                         <span class="ml-2">Logout </span>
                                     </a>
                                 </div>
@@ -194,22 +207,6 @@
                             </a>
                         </li>
                     }
-                    @*@if (a == "SeniorManager")
-                    {
-                        <li>
-                            <a href="/Manager/SMDashboard" aria-expanded="false">
-                                <i class="icon icon-single-04"></i><span class="nav-text">Dashboard Senior Manager</span>
-                            </a>
-                        </li>
-                    }
-                    @if (a == "Director")
-                    {
-                        <li>
-                            <a href="/Manager/DDashboard" aria-expanded="false">
-                                <i class="icon icon-single-04"></i><span class="nav-text">Dashboard Director</span>
-                            </a>
-                        </li>
-                    }*@
 
 
                     @*<li>

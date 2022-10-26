@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemClient.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ReimbusmentsController : Controller
     {
         
