@@ -77,10 +77,13 @@
                     {
                         "data": null,
                         "render": function (data, type, row) {
-                            /*if (row["payee"] == null) {
-                                return "~Empty~"
-                            }*/
                             return row["accountNumber"];
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, row) {
+                            return row["bankName"];
                         }
                     },
                     {
@@ -303,7 +306,7 @@ function getDataForm(id) {
                     <label for="inputState">Category : <span id="cat"> ${cata(result.category)} </span>  </label>
                 </div>
                 <div class="form-group col-xl-6 col-sm-6">
-                    <label for="inputState">Bank Account : <span id="total"> ${result.accountNumber} </span>  </label>
+                    <label for="inputState">Bank Account : <span id="bank"> ${result.bankName} ${result.accountNumber} </span>  </label>
                 </div>
                 <div class="form-group col-xl-6 col-sm-6">
                     <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>

@@ -28,6 +28,7 @@ function SaveExit() {
     obj.StartDate = $("#StartDate").val();
     obj.EndDate = $("#EndDate").val();
     obj.AccountNumber = $("#AccountNumber").val();
+    obj.BankName = $("#BankName").val();
     obj.Category = $("#Category").val();
     obj.Description = $("#Description").val();
     obj.Total = $("#Total").val();
@@ -79,6 +80,7 @@ function Update() {
             obj.EndDate = $("#EndDate").val();
             obj.Category = $("#Category").val();
             obj.AccountNumber = $("#AccountNumber").val();
+            obj.BankName = $("#BankName").val();
             obj.Description = $("#Description").val();
             obj.Total = $("#Total").val();
             obj.Attachments = convertimagefile($("#Attachments").val());
@@ -159,6 +161,7 @@ $(document).ready(function () {
                     $("#EndDate").attr("value", dateInputConversion(result.endDate))
                     Category(result.category)
                     $("AccountNumber").attr("value", result.accountNumber)
+                    $("BankName").attr("value", result.bankName)
                     $("#Description").html(result.description)
                     $("#Total").attr("value", result.total)
                 },

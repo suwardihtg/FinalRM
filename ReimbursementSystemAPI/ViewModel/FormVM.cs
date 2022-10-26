@@ -16,6 +16,7 @@ namespace ReimbursementSystemAPI.ViewModel
         public string Description { get; set; }
         public float? Total { get; set; }
         public int AccountNumber { get; set; }
+        public string BankName { get; set; }
         public int ExpenseId { get; set; }
         public string Attachments { get; set; }
     }

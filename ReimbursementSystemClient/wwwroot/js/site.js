@@ -209,12 +209,15 @@ function tableformdetail(expenseid) {
             {
                 "data": null,
                 "render": function (data, type, row) {
-                    /*if (row["payee"] == null) {
-                        return "~Empty~"
-                    }*/
                     return row["accountNumber"];
                 }
-            }, 
+            },
+            {
+                "data": null,
+                "render": function (data, type, row) {
+                    return row["bankName"];
+                }
+            },
             {
                 "data": null,
                 "render": function (data, type, row) {

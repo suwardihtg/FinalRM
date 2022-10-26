@@ -43,6 +43,8 @@
     <Compile Include="Migrations\20221025024734_initiaal.Designer.cs" />
     <Compile Include="Migrations\20221025034221_updateformtable.cs" />
     <Compile Include="Migrations\20221025034221_updateformtable.Designer.cs" />
+    <Compile Include="Migrations\20221026042306_addbanknametoformtable.cs" />
+    <Compile Include="Migrations\20221026042306_addbanknametoformtable.Designer.cs" />
     <Compile Include="Migrations\MyContextModelSnapshot.cs" />
   </ItemGroup>
 

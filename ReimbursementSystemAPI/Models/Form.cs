@@ -21,6 +21,7 @@ namespace ReimbursementSystemAPI.Models
         public string Description { get; set; }
         public float? Total { get; set; }
         public int AccountNumber { get; set; }
+        public string BankName { get; set; }
         public int Attachments { get; set; }
 
         [JsonIgnore]

@@ -59,6 +59,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                 form.Total = fromVM.Total;
                 form.ExpenseId = fromVM.ExpenseId;
                 form.AccountNumber = fromVM.AccountNumber;
+                form.BankName = fromVM.BankName;
             }
 
             context.Forms.Add(form);
@@ -81,6 +82,7 @@ namespace ReimbursementSystemAPI.Repository.Data
                                Category = (int)b.Category,
                                Description = b.Description,
                                AccountNumber = b.AccountNumber,
+                               BankName = b.BankName,
                                Attachments = c.FilePath
         };
 
@@ -127,6 +129,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             form.Description = fromVM.Description;
             form.Total = fromVM.Total;
             form.AccountNumber = fromVM.AccountNumber;
+            form.BankName = fromVM.BankName;
             //form.Attachments = fromVM.Attachments;
             ////form.ExpenseId = fromVM.ExpenseId;
 
