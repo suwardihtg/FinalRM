@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Models
 {
-    
     public class Account
     {
         [Key]
@@ -20,7 +19,5 @@ namespace ReimbursementSystemAPI.Models
 
         [JsonIgnore]
         public virtual Employee Employee { get; set; }
-
-        
     }
 }

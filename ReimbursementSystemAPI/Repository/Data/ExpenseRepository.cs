@@ -23,6 +23,8 @@ namespace ReimbursementSystemAPI.Repository.Data
             this._configuration = configuration;
         }
 
+
+        //Add New Request
         public int ExpenseForm(ExpenseVM expenseVM)
         {
             Expense expense = new Expense();
@@ -75,6 +77,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 1;
         }
 
+        //Update Request and History
         public int ExpenseFormUpdate(ExpenseVM expenseVM, int code)
         {
             var history = "";
@@ -129,8 +132,8 @@ namespace ReimbursementSystemAPI.Repository.Data
                             select new { expenses = b }).Single();
 
             var expense = data.expenses;
-            expense.CommentManager = expenseVM.CommentManager;
-            expense.CommentFinance = expenseVM.CommentFinance;
+            //expense.CommentManager = expenseVM.CommentManager;
+            //expense.CommentFinance = expenseVM.CommentFinance;
             expense.SubmittedDate = (expenseVM.SubmittedDate == null) ? DateTime.Now : expenseVM.SubmittedDate;
             expense.Total = expenseVM.Total;
             switch (expenseVM.Status)
@@ -168,15 +171,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 1;
         }
 
-        public int LastExpense()
-        {
-            var data = (from a in context.Employees
-                        join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                        select new { id = b.ExpenseId }).LastOrDefault();
-
-            return 1;
-        }
-
+        //Get Expense Id by Email
         public ExpenseIDVM ExpesnseID(string email)
         {
             var data = (from a in context.Employees
@@ -188,6 +183,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             return data;
         }
 
+        //Get Expense by Id
         public IEnumerable<ExpenseVM> GetExpense(string employeeid)
         {
             var register = from a in context.Employees where a.EmployeeId == employeeid
@@ -206,7 +202,9 @@ namespace ReimbursementSystemAPI.Repository.Data
             return data;
         }
 
-        //<!----------------- Finances -------------------> 
+
+
+        //----------------- Finances -------------------
         public IEnumerable<ExpenseManager> GetExpenseFinance()
         {
             var expense = from a in context.Employees
@@ -258,8 +256,7 @@ namespace ReimbursementSystemAPI.Repository.Data
         }
 
 
-        //<!----------------- Manager -------------------> 
-
+        //----------------- Manager ------------------->
         public IEnumerable<ExpenseManager> GetExpenseManager()
         {
             var expense = from a in context.Employees
@@ -276,7 +273,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                           };
             return expense.ToList();
         }
-
         
         public IEnumerable<ExpenseManager> GetExpenseManagerReject()
         {
@@ -296,8 +292,7 @@ namespace ReimbursementSystemAPI.Repository.Data
         }
 
 
-        //<!----------------- Manager & Finances -------------------> 
-
+        //----------------- Manager & Finances -------------------
         public IEnumerable<ExpenseManager> GetExpensePosted()
         {
             var expense = from a in context.Employees
@@ -313,237 +308,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                               Total = b.Total
                           };
             return expense.ToList();
-        }
-
-        
-
-        //<!-------------------- Notif ------------------------> 
-        public int NotifRequest(int expenseid)
-        {
-            var data = (from a in context.Employees
-                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where b.ExpenseId == expenseid
-                            select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("<div>");
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br> Your Reimbursement Request is being Processed <p>");
-            sb.Append("<div>");
-            sb.Append(" You have made a Reimbursment Request with ID ");
-            sb.Append($"<h1> # {expenseid} <h1>");
-            sb.Append("<h4> Best Regards, <h4>");
-            sb.Append("<h4> Reimbursement Team <h4>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("fanynabilah@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】Request Successful";
-                    mail.Body = sb.ToString();
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("fanynabilah@gmail.com", "Tigatujuh37");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }
-
-
-        //<!----------------- Notif Finances -------------------> 
-        public int NotifApproveF(int expenseid)
-        {
-            var data = (from a in context.Employees
-                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where b.ExpenseId == expenseid
-                            select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Finances ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Finance Department <p/>");
-
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】Finances Approve";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }
-
-        public int NotifRejectF(int expenseid)
-        {
-            var data = (from a in context.Employees
-                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where b.ExpenseId == expenseid
-                            select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Finance");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
-            sb.Append($"<br/> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Finance Department <p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】Rejected";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }
-
-
-        //<!----------------- Notif Manager -------------------> 
-
-        public int NotifApproveM(int expenseid)
-        {
-            var data = (from a in context.Employees
-                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where b.ExpenseId == expenseid
-                            select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-      
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>accepted</b> by Manager ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Manager <p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("fanynabilah@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】Manager Approve";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("fanynabilah@gmail.com", "Tigatujuh37");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
-        }
-
-        public int NotifRejectM(int expenseid)
-        {
-            var data = (from a in context.Employees
-                            join b in context.Expenses on a.EmployeeId equals b.EmployeeId
-                            where b.ExpenseId == expenseid
-                            select new { Employee = a, Expense = b }).Single();
-
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append($"<p> Dear {data.Employee.FirstName} {data.Employee.LastName},<br/> Your Reimbursement Have been <b>rejected</b> by Manager ");
-            sb.Append($"<br/> Your Reimbursment Request ID # {expenseid} <p/>");
-            sb.Append($"<p> Additional message : {data.Expense.CommentManager}");
-            sb.Append($"<br/> Please check your Account for more detail <p/>");
-            sb.Append("<p> Best Regards,");
-            sb.Append("<br/> Manager<p/>");
-
-            if (data != null)
-            {
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    mail.From = new MailAddress("testemailbagoes@gmail.com");
-                    mail.To.Add(data.Employee.Email);
-                    mail.Subject = $"【Reimbursment】 Rejected";
-                    mail.Body = sb.ToString();
-                    mail.IsBodyHtml = true;
-
-                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtp.Credentials = new
-                            NetworkCredential("testemailbagoes@gmail.com", "test123~~");
-                        smtp.EnableSsl = true;
-                        smtp.Send(mail);
-                    }
-                }
-                catch (Exception)
-                {
-                    return 2;
-                }
-                return 1;
-            }
-            return 3;
         }
     }
 }

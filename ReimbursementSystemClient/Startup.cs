@@ -36,7 +36,6 @@ namespace ReimbursementSystemClient
             services.AddControllersWithViews();
             services.AddSession();
             services.AddHttpContextAccessor();
-            services.AddScoped<EmployeeRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<FormRepository>();
             services.AddScoped<ExpenseHistoryRepository>();

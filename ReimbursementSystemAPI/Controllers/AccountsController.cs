@@ -32,6 +32,8 @@ namespace ReimbursementSystemAPI.Controllers
             this.context = context;
         }
 
+
+        //LOGIN
         [HttpPost("Login")]
         public ActionResult Post(LoginVM loginVM)
         {
@@ -60,12 +62,6 @@ namespace ReimbursementSystemAPI.Controllers
                         new Claim(ClaimTypes.Role, getUserData[0].Role)
                     };
 
-
-                    //foreach (var userRole in getUserData)
-                    //{
-                    //    claims.Add(new Claim(ClaimTypes.Role, userRole.Role));
-                    //}
-
                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:key"]));
                     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                     var token = new JwtSecurityToken(
@@ -78,7 +74,7 @@ namespace ReimbursementSystemAPI.Controllers
 
                     var idtoken = new JwtSecurityTokenHandler().WriteToken(token);
                     claims.Add(new Claim("TokenSecurity", idtoken.ToString()));
-                    return Ok(new JWTokenVM { Token = idtoken, Messages = "Login Sucsses"});
+                    return Ok(new JWTokenVM { Token = idtoken, Messages = "Login Success"});
                 case 2:
                     return BadRequest();
                 case 3:
@@ -88,6 +84,8 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+
+        //REGISTER
         [HttpPost("Register")]
         public ActionResult Register(RegisterVM registerVM)
         {
@@ -95,11 +93,10 @@ namespace ReimbursementSystemAPI.Controllers
             switch (result)
             {
                 case 1:
-                    return Ok(new { Status = HttpStatusCode.OK, Messages = "Register Sucsses" });
+                    return Ok(new { Status = HttpStatusCode.OK, Messages = "Register Success" });
                 default:
-                    return BadRequest(new { Status = HttpStatusCode.BadRequest, Message = "Register Fail" });
+                    return BadRequest(new { Status = HttpStatusCode.BadRequest, Message = "Register Failed" });
             }
-            
         }
     }
 }

@@ -20,6 +20,7 @@ namespace ReimbursementSystemAPI.Repository.Data
             this._configuration = configuration;
         }
 
+        //-------------- REGISTER ---------------
         public int Register(RegisterVM registerVM)
         {
             Employee employee = new Employee();
@@ -47,6 +48,8 @@ namespace ReimbursementSystemAPI.Repository.Data
             return 1;
         }
 
+
+        //-------------- LOGIN ---------------
         public int Login(LoginVM loginVM)
         {
             var dataPass = (from a in context.Employees where a.Email == loginVM.Email
@@ -67,7 +70,6 @@ namespace ReimbursementSystemAPI.Repository.Data
                 return 2;
             }
             return 3;
-
         }
     }
 }

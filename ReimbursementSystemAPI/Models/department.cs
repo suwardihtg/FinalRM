@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Models
 {
-    
     public class Department
     {
         [Key]

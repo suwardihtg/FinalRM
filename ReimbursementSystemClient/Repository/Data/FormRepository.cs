@@ -33,6 +33,8 @@ namespace ReimbursementSystemClient.Repository.Data
                 BaseAddress = new Uri(address.link)
             };
         }
+
+        //Get Form
         public async Task<List<FormVM>> GetForm(int expenseid)
         {
             List<FormVM> entities = new List<FormVM>();
@@ -45,6 +47,7 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
+        //Get Attachment
         public async Task<AttachmentsVM> Getatc(int imgid)
         {
             AttachmentsVM entities = null;
@@ -57,6 +60,7 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
+        //Add New Form
         public HttpStatusCode InsertForm(FormVM entity, string expenseid)
         {
             entity.ExpenseId = Int32.Parse(expenseid);
@@ -65,18 +69,7 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
-        public async Task<TotalVM> TotalExpenseForm(int expenseid)
-        {
-            TotalVM entities = null;
-
-            using (var response = await httpClient.GetAsync(request + "TotalExpense/" + expenseid))
-            {
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                entities = JsonConvert.DeserializeObject<TotalVM>(apiResponse);
-            }
-            return entities;
-        }
-
+        //Edit Form
         public HttpStatusCode PutEditFrom(FormVM entity, int formid)
         {
             entity.FormId = formid;
@@ -85,6 +78,7 @@ namespace ReimbursementSystemClient.Repository.Data
             return result.StatusCode;
         }
 
+        //Upload Attachment
         public HttpStatusCode SingleUpload(string fileName, byte[] bytes)
         {
             var multipartFormDataContent = new MultipartFormDataContent();
@@ -93,6 +87,5 @@ namespace ReimbursementSystemClient.Repository.Data
             var result = httpClient.PostAsync("Attachments/" + "singleupload/", multipartFormDataContent).Result;
             return result.StatusCode;
         }
-
     }
 }

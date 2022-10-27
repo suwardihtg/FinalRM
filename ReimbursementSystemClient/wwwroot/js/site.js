@@ -6,16 +6,14 @@
             <th scope="col" class="text-light text-center status">Action</th>`
 }
 
-function remove(str) {
+/*function remove(str) {
     // Get target th with the name you want to remove.
     var target = $('table').find('th[data-name="' + str + '"]');
     // Find its index among other ths
-
     var index = (target).index();
     // For each tr, remove all th and td that match the index.
-
     $('table tr').find('th:eq(' + index + '),td:eq(' + index + ')').remove();
-}
+}*/
 
 function status(stat) {
     switch (stat) {
@@ -61,21 +59,6 @@ function EditExpense(expenseid) {
     })
 }
 
-/*function EditForm(formid) {
-    console.log(formid)
-    $.ajax({
-        url: "/Forms/EditForm/" + formid,
-        success: function (result) {
-            console.log(result)
-            window.location.href = "/Reimbusments/Form";
-
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}*/
-
 function getData(id) {
     $.ajax({
         url: "/Expenses/Get/" + id,
@@ -110,40 +93,6 @@ function getData(id) {
     })
 }
 
-function getData2(id) {
-    $('textarea#managercomment').val('')
-    $.ajax({
-        url: "/Expenses/Get/" + id,
-        data: "",
-        success: function (result) {
-            console.log(result)
-            var text = ""
-            text =
-                `
-                <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">ExpenseId : <span id="Eid"> ${result.expenseId} </span>  </label>
-                </div>
-
-                <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">Status : <span id="stat"> ${status(result.status)} </span>  </label>
-                </div>
-
-                <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">Total : <span id="total"> ${result.total} </span>  </label>
-                </div>
-                <div class="form-group col-xl-6 col-sm-6 text-dark">
-                    <label for="inputState">Submited : <span id="date"> ${dateConversion(result.submitted)} </span>  </label>
-                </div>
-                `
-            $(".reject-modal").html(text);
-            console.log(result)
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
-
 function tableformdetail(expenseid) {
     if ($.fn.DataTable.isDataTable('#dataTableForm')) {
         $('#dataTableForm').DataTable().destroy();
@@ -169,7 +118,6 @@ function tableformdetail(expenseid) {
                 "targets": [3, 4],
                 "orderable": false
             }
-
         ],
         "columns": [
             {
@@ -268,11 +216,9 @@ function convertimagefile(image) {
 }
 
 function AllTable() {
-
     if ($.fn.DataTable.isDataTable('#tabelExpense')) {
         $('#tabelExpense').DataTable().destroy();
     }
-
     $('#tabelExpense tbody').empty();
 
     if ($('.action').length == 0) {
@@ -353,7 +299,6 @@ function AllTable() {
                 }
 
             }
-
         ]
     });
 }

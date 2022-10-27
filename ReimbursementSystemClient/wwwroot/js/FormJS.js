@@ -6,8 +6,6 @@
             if (form.checkValidity() === true) {
                 if (int == 1) {
                     SaveExit()
-                } else if (int == 2) {
-                    AddAnother()
                 }
             }
             else {
@@ -104,38 +102,6 @@ function Update() {
     })
 }
 
-/*function AddAnother() {
-    var obj = new Object();
-    var formData = new FormData();
-    var data = $('#Attachments')[0].files[0]
-    formData.append("Attachments", $('#Attachments')[0].files[0]);
-
-    obj.Receipt_Date = $("#Receipt_Date").val();
-    obj.Start_Date = $("#Start_Date").val();
-    obj.End_Date = $("#End_Date").val();
-    obj.Category = $("#Category").val();
-    obj.Payee = $("#Payee").val();
-    obj.Description = $("#Description").val();
-    obj.Total = $("#Total").val();
-    obj.Attachments = convertimagefile($("#Attachments").val());
-
-    console.log(obj)
-
-    $.ajax({
-        url: "/Forms/InsertForm",
-        type: "Post",
-        'data': obj,
-        'dataType': 'json',
-        success: function (result) {
-            window.location.href = "/Reimbusments/Form"
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-    return false;
-}*/
-
 function Cancel() {
     window.location.href = "/Reimbusments/Expense"
 }
@@ -175,16 +141,6 @@ $(document).ready(function () {
             console.log(error)
         }
     })
-
-    var readURL = function (input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('.profile-image').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 });
 
 function Category(selected) {

@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
-
     table = $("#tabelExpense").DataTable({
-
         responsive: true,
         "ajax": {
             "url": "/Expenses/GetExpenseFinance",
@@ -66,7 +64,7 @@
                             onclick="Reject('${row['expenseId']}')" data-target="#UpdateModals" title="Reject">
                             <i class="fa fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <button type="button" class="btn btn-warning" data-toggle="modal"
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="fa fa-check-circle"></i>
                             </button>`;
@@ -83,8 +81,6 @@ function dateConversion(dates) {
 }
 
 function Reject(expenseid) {
-    //var expenseid = parseInt($('#expenseId').text())
-    var finance = $('textarea#managercomment').val();
     Swal.fire({
         title: 'Are you sure?',
         type: "warning",
@@ -102,7 +98,7 @@ function Reject(expenseid) {
                     obj.expenseId = expenseid;
                     obj.approver = result2.approver;
                     obj.commentManager = result2.commentManager;
-                    obj.commentFinace = finance;
+                    obj.commentFinace = result2.commentManager;
                     obj.purpose = result2.purpose;
                     obj.description = result2.description;
                     obj.total = result2.total;
@@ -130,7 +126,7 @@ function Reject(expenseid) {
             $.LoadingOverlay("show");
             setTimeout(function () {
                 $.LoadingOverlay("hide");
-            }, 3000);
+            }, 2000);
         }
     })
    
@@ -185,13 +181,13 @@ function Approve(expenseid) {
         $.LoadingOverlay("show");
         setTimeout(function () {
             $.LoadingOverlay("hide");
-        }, 3000);
+        }, 2000);
     })
 }
 
 function Payment(expenseid) {
     swal({
-        title: "Comfirm payment?",
+        title: "Confirm payment?",
         text: "You won't be able to revert this!",
         type: "info",
         showCancelButton: true,
@@ -239,10 +235,10 @@ function Payment(expenseid) {
                 }
             })
         }
-        $.LoadingOverlay("show");
+        /*$.LoadingOverlay("show");
         setTimeout(function () {
             $.LoadingOverlay("hide");
-        }, 3000);
+        }, 2000);*/
     })
 }
 
@@ -324,7 +320,6 @@ function PaymentTable() {
             }
         ],
     });
-
 }
 
 function RejectTable() {
@@ -405,7 +400,6 @@ function RejectTable() {
 }
 
 function RequestTable() {
-    
     $('.status').html("Action");
     if ($.fn.DataTable.isDataTable('#tabelExpense')) {
         $('#tabelExpense').DataTable().destroy();
@@ -476,10 +470,10 @@ function RequestTable() {
                             <i class="fa fa-info-circle"></i>
                             </button>
                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                            onclick="getData2('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
+                            onclick="Reject('${row['expenseId']}')" data-target="#exampleModal" data-placement="top" title="Reject">
                             <i class="fa fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            <button type="button" class="btn btn-warning" data-toggle="modal" 
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="fa fa-check-circle"></i>
                             </button>`;
@@ -487,8 +481,4 @@ function RequestTable() {
             }
         ],
     });
-    
 }
-
-
-

@@ -4,20 +4,6 @@
         success: function (result) {
             $(".expense-title span").html(result);
 
-            /*$.ajax({
-                url: "/Expenses/GetExpense",
-                type: "Get",
-                success: function (result) {
-                    console.log(result);
-                    if (result.length != 0 ) {
-                        $("#Approver").html(result[0].approver)
-                    }    
-                },
-                error: function (error) {
-                    $("#Approver").html("~~")
-                }
-            })*/
-
             table = $("#Formtable").DataTable({
                 responsive: true,
                 dom: 'lBfrtip',
@@ -111,51 +97,21 @@
                             onclick="getDataForm('${row['formId']}')" data-placement="top" title="Detail" data-target="#DetailModal" >
                             <i class="fa fa-info-circle"></i> 
                             </button>
-                            <button type="button" class="btn btn-danger hide-btn" data-toggle="modal" onclick="Delete('${row['formId']}')" data-placement="top" title="Delete">
-                            <i class="fa fa-trash"></i> 
-                            </button>
-                            <button type="button" class="btn btn-primary hide-btn" data-toggle="modal"
+                            <button type="button" class="btn btn-warning hide-btn" data-toggle="modal"
                             onclick="EditForm('${row['formId']}')" title="Edit" data-target="#UpdateModals">
                             <i class="fa fa-edit"></i>
                             </button>`;
                         }
                     }  
                 ],
-                initComplete: function () {
-                    $.ajax({
-                        url: "/Expenses/Get/" + result,
-                        type: "Get",       
-                        data: "",
-                        success: function (result) {
-                            console.log(result)
-                            $("#Status").html(status(result.status))
-                            /*if ($("#Approver").text() == "") {
-                                $("#Approver").html(result.approver)
-                            }*/
-                            $("#Description").html(result.description)
-                            //$("#Purpose").attr("value", result.purpose)
-                            if (result.status != 0) {
-                                $("#Description").prop('disabled', true);
-                                //$("#Purpose").prop('disabled', true);
-                                $(".hide-btn").hide();
-                            } else {
-                                $("#Description").removeAttr('disabled');
-                                $("#Purpose").removeAttr('disabled');
-                                $(".hide-btn").show();
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error)
-                        }
-                    })
-                }
             });
 
             $.ajax({
-                url: "/forms/TotalExpenseForm/" + result,
+                url: "/forms/getform/" + result,
                 type: "Get",
-                success: function (result) {
-                    $("#Total").val(result.total)
+                success: function (data) {
+                    console.log(data)
+                    $("#Total").val(data[0].total)
                 },
                 error: function (error) {
                     console.log(error)
@@ -186,10 +142,7 @@
 
 function Submit() {
     var obj = new Object();
-    //obj.approver = $("#Approver").text();
     obj.expenseId = parseInt($(".expense-title span").text());
-    //obj.purpose = $("#Purpose").val();
-    obj.description = $("#Description").val();
     obj.total = $("#Total").val();
     obj.status = 1;
     $.ajax({
@@ -207,7 +160,6 @@ function Submit() {
                     window.location.href = "/Reimbusments/Reimbusment"
                 }
             })
-
         },
         error: function (error) {
             Swal.fire({
@@ -217,77 +169,10 @@ function Submit() {
             })
         }
     })
-    $.LoadingOverlay("show");
+    /*$.LoadingOverlay("show");
     setTimeout(function () {
         $.LoadingOverlay("hide");
-    }, 3000);
-}
-
-function SaveExit() {
-    var obj = new Object();
-    //obj.approver = $("#Approver").text();
-    obj.expenseId = parseInt($(".expense-title span").text());
-    //obj.purpose = $("#Purpose").val();
-    obj.description = $("#Description").val();
-    obj.total = $("#Total").val();
-    obj.status = 0;
-    $.ajax({
-        url: "/Expenses/Submit/" + 2,
-        type: "Put",
-        'data': obj,
-        'dataType': 'json',
-        success: function (result) {    
-            Swal.fire(
-                'Good job!',
-                'Your data has been saved!',
-                'success',
-            ).then((result2) => {
-                if (result2) {
-                    //need to close expense session first
-                    window.location.href = "/Reimbusments/Reimbusment"
-                }
-            })
-        },
-        error: function (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Submit Fail!'
-            })
-        }
-    })
-}
-
-function Delete(id) {
-    console.log(id)
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.value) {
-            $.ajax({
-                url: "/Forms/Delete/" + id,
-                type: "Delete",
-                success: function (result) {
-                    console.log(result)
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                    table.ajax.reload()
-                },
-                error: function (error) {
-                    alert("Delete Fail");
-                }
-            });
-        }
-    })
+    }, 2000);*/
 }
 
 function getDataForm(id) {
@@ -329,42 +214,6 @@ function getDataForm(id) {
         },
         error: function (error) {
             console.log(error)
-        }
-    })
-
-
-}
-
-function InsertForm() {
-    var obj = new Object();
-    //obj.approver = $("#Approver").text();
-    obj.expenseId = parseInt($(".expense-title span").text());
-    //obj.purpose = $("#Purpose").val();
-    obj.description = $("#Description").val();
-    obj.total = $("#Total").val();
-    obj.status = 0;
-    $.ajax({
-        url: "/Expenses/Submit/" + 11,
-        type: "Put",
-        'data': obj,
-        'dataType': 'json',
-        success: function (result) {
-            $.ajax({
-                url: "/Forms/NewForm/",
-                success: function (result) {
-                    window.location.href = result;
-                },
-                error: function (error) {
-                    console.log(error)
-                }
-            });
-        },
-        error: function (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Submit Fail!'
-            })
         }
     })
 }

@@ -22,25 +22,29 @@ namespace ReimbursementSystemAPI.Repository
             entities = myContext.Set<Entity>();
         }
 
+
+        //DELETE
         public int Delete(Key key)
         {
-
             var entity = entities.Find(key);
             myContext.Remove(entity);
             var result = myContext.SaveChanges();
             return result;
         }
 
+        //GETALL
         public IEnumerable<Entity> Get()
         {
             return entities.ToList();
         }
 
+        //GET
         public Entity Get(Key key)
         {
             return entities.Find(key);
         }
 
+        //POST
         public int Insert(Entity entity)
         {
             entities.Add(entity);
@@ -48,13 +52,12 @@ namespace ReimbursementSystemAPI.Repository
             return result;
         }
 
+        //PUT
         public int Update(Entity entity, Key key)
         {
             myContext.Entry(entity).State = EntityState.Modified;
             var result = myContext.SaveChanges();
             return result;
         }
-
-
     }
 }

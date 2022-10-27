@@ -29,6 +29,7 @@ namespace ReimbursementSystemAPI.Controllers
             this.context = context;
         }
 
+        //Add New Request
         [HttpPost("ExpenseInsert")]
         public ActionResult ExpenseForm(ExpenseVM expenseVM)
         {
@@ -42,16 +43,13 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        //Update Request and History
         [HttpPut("ExpenseUpdate/{code}")]
         public ActionResult ExpenseFormUpdate(ExpenseVM expenseVM, int code)
         {
             var result = expenseRepository.ExpenseFormUpdate(expenseVM, code);
             if (result == 1)
             {
-                if (code == 1)
-                {
-                    expenseRepository.NotifRequest(expenseVM.ExpenseId);
-                }
                 return Ok(result);
             }
             else
@@ -60,6 +58,7 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        //Get Expense by Id
         [HttpGet("ExpenseData/{employeeid}")]
         public ActionResult GetExpense(string employeeid)
         {
@@ -72,6 +71,7 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
+        //Get Expense Id by Email
         [HttpGet("GetID/{email}")]
         public ActionResult ExpesnseID(string email)
         {
@@ -84,7 +84,9 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        //<!----------------- Finances ------------------->
+
+
+        //----------------- Finances -------------------
 
         [HttpGet("ExpenseDataFinances")]
         public ActionResult GetExpenseFinances()
@@ -129,35 +131,6 @@ namespace ReimbursementSystemAPI.Controllers
             var result = expenseRepository.ExpenseFormUpdate(expenseVM, code);
             if(result == 1)
             {
-                switch (code)
-                {
-                    case 3:
-                        expenseRepository.NotifRejectM(expenseVM.ExpenseId);
-                        break;
-                    case 4:
-                        expenseRepository.NotifApproveM(expenseVM.ExpenseId);
-                        break;
-                    case 5:
-                        expenseRepository.NotifRejectF(expenseVM.ExpenseId);
-                        break;
-                    case 6:
-                        expenseRepository.NotifApproveF(expenseVM.ExpenseId);
-                        break;
-                    /*case 7:
-                        expenseRepository.NotifPaid(expenseVM.ExpenseId);
-                        break;*/
-                    /*case 8:
-                        expenseRepository.NotifApproveSM(expenseVM.ExpenseId);
-                        break;
-                    case 9:
-                        expenseRepository.NotifRejectD(expenseVM.ExpenseId);
-                        break;
-                    case 10:
-                        expenseRepository.NotifApproveD(expenseVM.ExpenseId);
-                        break;*/
-                    default:
-                        break;
-                }
                 return Ok(result);
             }
             else
@@ -168,7 +141,7 @@ namespace ReimbursementSystemAPI.Controllers
         }
 
 
-        //<!----------------- Manager ------------------->
+        //----------------- Manager -------------------
 
         [HttpGet("ExpenseDataManager")]
         public ActionResult GetExpenseManager()
@@ -181,30 +154,6 @@ namespace ReimbursementSystemAPI.Controllers
             }
             return NotFound(result);
         }
-
-        /*[HttpGet("ExpenseDataSManager")]
-        public ActionResult GetExpenseSManager()
-        {
-            var result = expenseRepository.GetExpenseSManager();
-
-            if (result.Count() != 0)
-            {
-                return Ok(result);
-            }
-            return NotFound(result);
-        }
-
-        [HttpGet("ExpenseDataDirector")]
-        public ActionResult GetExpenseDirector()
-        {
-            var result = expenseRepository.GetExpenseDirector();
-
-            if (result.Count() != 0)
-            {
-                return Ok(result);
-            }
-            return NotFound(result);
-        }*/
 
         [HttpGet("GetExpenseManagerReject")]
         public ActionResult GetExpenseManagerReject()
@@ -219,7 +168,8 @@ namespace ReimbursementSystemAPI.Controllers
         }
 
 
-        //<!----------------- Manager & Finances -------------------> 
+
+        //----------------- Manager & Finances -------------------
 
         [HttpGet("GetExpensePosted")]
         public ActionResult GetExpensePosted()
@@ -232,6 +182,5 @@ namespace ReimbursementSystemAPI.Controllers
             }
             return NotFound(result);
         }
-
     }
 }

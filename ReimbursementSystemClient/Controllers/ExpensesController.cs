@@ -47,6 +47,7 @@ namespace ReimbursementSystemClient.Controllers
         }
 
 
+        //Get Request
         [HttpGet]
         public async Task<JsonResult> GetExpense()
         {
@@ -55,6 +56,7 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+        //Add New Request
         [HttpPost]
         public async Task<JsonResult> NewExpense(ExpenseVM entity)
         {
@@ -98,7 +100,9 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
-        //<!----------------- Finances ------------------->
+
+
+        //----------------- Finances -------------------
 
         [HttpGet]
         public async Task<JsonResult> GetExpenseFinance()
@@ -122,28 +126,14 @@ namespace ReimbursementSystemClient.Controllers
         }
 
 
-        //<!----------------- Manager ------------------->
 
+        //----------------- Manager -------------------
         [HttpGet]
         public async Task<JsonResult> GetExpenseManager()
         {
             var result = await expensesRepository.GetExpenseManager();
             return Json(result);
         }
-
-        /*[HttpGet]
-        public async Task<JsonResult> GetExpenseSManager()
-        {
-            var result = await expensesRepository.GetExpenseSManager();
-            return Json(result);
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> GetExpenseDirector()
-        {
-            var result = await expensesRepository.GetExpenseDirector();
-            return Json(result);
-        }*/
 
         [HttpGet]
         public async Task<JsonResult> GetExpenseManagerReject()
@@ -153,8 +143,8 @@ namespace ReimbursementSystemClient.Controllers
         }
 
 
-        //<!----------------- Manager & Finances -------------------> 
 
+        //----------------- Manager & Finances -------------------
         [HttpGet]
         public async Task<JsonResult> GetExpensePosted()
         {
@@ -169,6 +159,5 @@ namespace ReimbursementSystemClient.Controllers
             var result = expensesRepository.Approval(expenseVM, Code);
             return Json(result);
         }
-
     }
 }

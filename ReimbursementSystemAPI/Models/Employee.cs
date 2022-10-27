@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 using ReimbursementSystemAPI.Models;
 
 namespace ReimbursementSystemAPI.Models
-
 {
-    
     public class Employee
     {
         [Key]
@@ -19,6 +17,7 @@ namespace ReimbursementSystemAPI.Models
 
         [Required]
         public string FirstName { get; set; }
+
         [Required]
         public string LastName { get; set; }
 
@@ -26,7 +25,6 @@ namespace ReimbursementSystemAPI.Models
         [Required, Index(IsUnique = true)]
         public string Phone { get; set; }
         public float? Salary { get; set; }
-
         public string ManagerId { get; set; }
 
         [Required, Index(IsUnique = true)]
@@ -38,8 +36,6 @@ namespace ReimbursementSystemAPI.Models
 
         [JsonIgnore]
         public virtual ICollection<Expense> Expenses { get; set; }
-
-     
 
         [JsonIgnore]
         public virtual Department Departments { get; set; }

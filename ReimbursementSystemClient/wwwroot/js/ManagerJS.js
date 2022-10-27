@@ -1,5 +1,4 @@
 ﻿$(document).ready(function () {
-   
     table = $("#tabelExpense").DataTable({
         "processing": true,
         "responsive": true,
@@ -66,7 +65,7 @@
                             onclick="Reject('${row['expenseId']}')" data-target="#UpdateModals" title="Reject">
                             <i class="fa fa-times-circle"></i>
                             </button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            <button type="button" class="btn btn-warning" data-toggle="modal" 
                             onclick="Approve('${row['expenseId']}')" title="Approve" data-target="#UpdateModals">
                             <i class="fa fa-check-circle"></i>
                             </button>`;
@@ -77,10 +76,7 @@
 });
 
 
-
 function Reject(expenseid) {
-    //var expenseid = parseInt($('#expenseId').text())
-    //var managercomment = $('textarea#managercomment').val();
     Swal.fire({
         title: 'Are you sure?',
         type: "warning",
@@ -180,31 +176,6 @@ function Approve(expenseid) {
                                 console.log(error)
                             }
                         })
-                        /*$.ajax({
-                            url: "/Expenses/Approval/" + 4,
-                            type: "PUT",
-                            data: obj
-                        }).done((result) => {
-                            console.log(result);
-                            if (result == 200) {
-                                Swal.fire(
-                                    'Good Job!',
-                                    'Your data has been saved.',
-                                    'success'
-                                )
-                                $.LoadingOverlay("hide");
-                                $('#tabelExpense').DataTable().ajax.reload();
-                            }
-                            else if (result == 400) {
-                                Swal.fire(
-                                    'Watch Out!',
-                                    'Duplicate Data!',
-                                    'error'
-                                )
-                            }
-                        }).fail((error) => {
-                            console.log(error);
-                        })*/
                     });
                     
                 },
@@ -297,8 +268,8 @@ function RejectTable() {
 
 }
 
-function RequestTable() {
 
+function RequestTable() {
     $('.status').html("Action");
     if ($.fn.DataTable.isDataTable('#tabelExpense')) {
         $('#tabelExpense').DataTable().destroy();
@@ -378,10 +349,6 @@ function RequestTable() {
                             </button>`;
                 }
             }
-
-
         ]
     });
 }
-
-

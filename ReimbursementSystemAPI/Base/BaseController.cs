@@ -20,6 +20,7 @@ namespace ReimbursementSystemAPI.Base
             this.repository = repository;
         }
 
+        //GETALL
         [HttpGet]
         public ActionResult Get()
         {
@@ -32,7 +33,7 @@ namespace ReimbursementSystemAPI.Base
             return NotFound();
         }
 
-
+        //GET
         [HttpGet("{Key}")]
         public ActionResult Get(Key Key)
         {
@@ -44,20 +45,21 @@ namespace ReimbursementSystemAPI.Base
             return NotFound();
         }
 
-        [HttpDelete("{Key}")]
-        public ActionResult Delete(Key key)
+        //POST
+        [HttpPost]
+        public ActionResult Post(Entity entity)
         {
-            var result = repository.Delete(key);
-            try
-            {
-                return Ok(new { result = 200, message = "Data Successfully Deleted" });
+            try {
+                var result = repository.Insert(entity);
+                return Ok(new { result = 200, message = "Data Successfully Inserted" });
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
-                return NotFound();
+                return BadRequest();
             }
         }
 
+        //PUT
         [HttpPut]
         public ActionResult Update(Entity entity, Key key)
         {
@@ -72,16 +74,18 @@ namespace ReimbursementSystemAPI.Base
             }
         }
 
-        [HttpPost]
-        public ActionResult Post(Entity entity)
+        //DELETE
+        [HttpDelete("{Key}")]
+        public ActionResult Delete(Key key)
         {
-            try {
-                var result = repository.Insert(entity);
-                return Ok(new { result = 200, message = "Data Successfully Inserted" });
-            }
-            catch (Exception)
+            var result = repository.Delete(key);
+            try
             {
-                return BadRequest();
+                return Ok(new { result = 200, message = "Data Successfully Deleted" });
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
             }
         }
     }

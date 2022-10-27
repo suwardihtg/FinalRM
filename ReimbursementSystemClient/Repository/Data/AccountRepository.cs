@@ -20,6 +20,7 @@ namespace ReimbursementSystemClient.Repository.Data
         private readonly string request;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly HttpClient httpClient;
+
         public AccountRepository(Address address, string request = "Accounts/") : base(address, request)
         {
             this.address = address;

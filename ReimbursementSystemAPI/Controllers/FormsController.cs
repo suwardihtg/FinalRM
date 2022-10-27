@@ -28,6 +28,7 @@ namespace ReimbursementSystemAPI.Controllers
             this.context = context;
         }
 
+        //Add New Form
         [HttpPost("InsertForm")]
         public ActionResult NewForm(FormVM fromVM)
         {
@@ -41,6 +42,7 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        //Get Form
         [HttpGet("FormData/{expenseid}")]
         public ActionResult GetForm(int expenseid)
         {
@@ -53,18 +55,7 @@ namespace ReimbursementSystemAPI.Controllers
             return NotFound(result);
         }
 
-        [HttpGet("TotalExpense/{expenseid}")]
-        public ActionResult TotalExpenseForm(int expenseid)
-        {
-            var result = formRepository.TotalExpenseForm(expenseid);
-
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return Ok(result);
-        }
-
+        //Edit Form
         [HttpPut("FormUpdate")]
         public ActionResult FormUpdate(FormVM fromVM)
         {
@@ -78,6 +69,7 @@ namespace ReimbursementSystemAPI.Controllers
             }
         }
 
+        //Get Attachment
         [HttpGet("Getatc/{imgid}")]
         public ActionResult Getatc(int imgid)
         {
@@ -90,5 +82,4 @@ namespace ReimbursementSystemAPI.Controllers
             return Ok(result);
         }
     }
-
 }

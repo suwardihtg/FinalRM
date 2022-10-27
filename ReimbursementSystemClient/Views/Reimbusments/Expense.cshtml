@@ -20,34 +20,6 @@
                 <h4 class="card-title expense-title">Reimbursement Request # <span value=""></span></h4>
             </div>
             <div class="card-body">
-                @*<form class="needs-validation" enctype="multipart/form-data" novalidate>
-
-                    <div class="row">
-
-                        <div class="form-group col-xl-6 text-dark">
-                            <label for="inputState">Approver : <span id="Approver"></span> </label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-xl-6 text-dark">
-                            <label for="inputState">Purpose</label>
-                            <input type="text" class="form-control input-default" placeholder="" id="Purpose" value="">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="basic-form form-group col-xl-6 text-dark">
-                            <label for="inputState">Description</label>
-                            <div class="form-group">
-                                <textarea class="form-control" rows="4" id="Description"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>*@
-
-                @*<button class="btn btn-primary mb-3 hide-btn" type="button" onclick="return InsertForm()"><i class="fa fa-plus-circle"></i> Add Request</button>*@
                 <table id="Formtable" class="table table-hover dt-responsive table-striped nowarp" style="width:100%">
                     <thead class="table-info head-table text-center">
                         <tr class="bg-primary column-tab">
@@ -65,12 +37,8 @@
                         </tr>
                     </tbody>
                 </table>
-
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
+                <br />
+                <br />
                 <div class="row">
                     <div class="col-xl-6 text-dark">
                         <label for="inputState">Status History <i class="fa fa-history"></i></label>
@@ -83,20 +51,15 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Rp.</span>
                             </div>
-                            <input id="Total" type="number" class="form-control" placeholder="Rp.0" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" disabled>
+                            <input id="Total" type="number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" step="0.01" disabled>
                         </div>
                         <div class="mt-4">
                             <button class="btn btn-success hide-btn" type="button" onclick="return Submit()">Submit Request</button>
-                            @*<button class="btn btn-primary hide-btn" type="button" onclick="return SaveExit()">Save & Exit</button>*@
-
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-
     </div>
 
         <!-- Modal Detail Employee-->

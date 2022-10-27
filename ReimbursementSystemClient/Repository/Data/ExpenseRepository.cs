@@ -32,6 +32,7 @@ namespace ReimbursementSystemClient.Repository.Data
             };
         }
 
+        //Get Expense by Id
         public async Task<List<ExpenseVM>> GetExpense(string employeeid)
         {  
             List<ExpenseVM> entities = new List<ExpenseVM>();
@@ -44,6 +45,7 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
+        //Get Expense Id by Email
         public async Task<ExpenseIDVM> GetID(string email)
         {
             ExpenseIDVM entities = null;
@@ -56,6 +58,8 @@ namespace ReimbursementSystemClient.Repository.Data
             return entities;
         }
 
+
+        //Add New Request
         public HttpStatusCode NewExpense(ExpenseVM entity, string employeeId)
         {
             entity.EmployeeId = employeeId;
@@ -86,7 +90,9 @@ namespace ReimbursementSystemClient.Repository.Data
             return entitiesNew;
         }
 
-        //<!----------------- Finances ------------------->
+
+
+        //----------------- Finances -------------------
         public async Task<List<ExpenseManager>> GetExpenseFinance()
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
@@ -134,8 +140,8 @@ namespace ReimbursementSystemClient.Repository.Data
         }
 
 
-        //<!----------------- Manager ------------------->
 
+        //----------------- Manager -------------------
         public async Task<List<ExpenseManager>> GetExpenseManager()
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
@@ -147,30 +153,6 @@ namespace ReimbursementSystemClient.Repository.Data
             }
             return entitiesNew;
         }
-
-        /*public async Task<List<ExpenseManager>> GetExpenseSManager()
-        {
-            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
-
-            using (var response = await httpClient.GetAsync(request + "ExpenseDataSManager/"))
-            {
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
-            }
-            return entitiesNew;
-        }
-
-        public async Task<List<ExpenseManager>> GetExpenseDirector()
-        {
-            List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
-
-            using (var response = await httpClient.GetAsync(request + "ExpenseDataDirector/"))
-            {
-                string apiResponse = await response.Content.ReadAsStringAsync();
-                entitiesNew = JsonConvert.DeserializeObject<List<ExpenseManager>>(apiResponse);
-            }
-            return entitiesNew;
-        }*/
 
         public async Task<List<ExpenseManager>> GetExpenseManagerReject()
         {
@@ -193,8 +175,7 @@ namespace ReimbursementSystemClient.Repository.Data
         }
 
 
-        //<!----------------- Manager & Finances -------------------> 
-
+        //----------------- Manager & Finances ------------------- 
         public async Task<List<ExpenseManager>> GetExpensePosted()
         {
             List<ExpenseManager> entitiesNew = new List<ExpenseManager>();
@@ -207,7 +188,5 @@ namespace ReimbursementSystemClient.Repository.Data
             }
             return entitiesNew;
         }
-
-
     }
 }

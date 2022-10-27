@@ -23,22 +23,23 @@ namespace ReimbursementSystemAPI.Repository.Data
             this._configuration = configuration;
         }
 
-        public int NewForm(FormVM fromVM)
+        //Add New Form
+        public int NewForm(FormVM formVM)
         {
             Employee_Attachment atc = new Employee_Attachment();
             {
-                atc.FilePath = fromVM.Attachments;
+                atc.FilePath = formVM.Attachments;
             }
             context.Employee_Attachments.Add(atc);
             context.SaveChanges();
             Form form = new Form();
             {
-                form.RequestDate = fromVM.RequestDate;
-                form.StartDate = fromVM.StartDate;
-                form.EndDate = fromVM.EndDate;
+                form.RequestDate = formVM.RequestDate;
+                form.StartDate = formVM.StartDate;
+                form.EndDate = formVM.EndDate;
                 form.Attachments = atc.Id;
 
-                switch (fromVM.Category)
+                switch (formVM.Category)
                 {
                     case 0:
                         form.Category = Category.Transportation;
@@ -55,20 +56,18 @@ namespace ReimbursementSystemAPI.Repository.Data
                     default:
                         break;
                 }
-                form.Description = fromVM.Description;
-                form.Total = fromVM.Total;
-                form.ExpenseId = fromVM.ExpenseId;
-                form.AccountNumber = fromVM.AccountNumber;
-                form.BankName = fromVM.BankName;
+                form.Description = formVM.Description;
+                form.Total = formVM.Total;
+                form.ExpenseId = formVM.ExpenseId;
+                form.AccountNumber = formVM.AccountNumber;
+                form.BankName = formVM.BankName;
             }
-
             context.Forms.Add(form);
-
             context.SaveChanges();
-           
             return 1;
         }
 
+        //Get Form
         public IEnumerable<FormVM> GetForm(int expenseid)
         {
             var register = from a in context.Expenses where a.ExpenseId == expenseid
@@ -84,32 +83,20 @@ namespace ReimbursementSystemAPI.Repository.Data
                                AccountNumber = b.AccountNumber,
                                BankName = b.BankName,
                                Attachments = c.FilePath
-        };
-
+                           };
             return register.ToList();
         }
 
-        public TotalVM TotalExpenseForm(int expenseid)
+        //Edit Form
+        public int FormUpdate(FormVM formVM)
         {
-            var sum = (from a in context.Expenses
-                       where a.ExpenseId == expenseid
-                       join b in context.Forms on a.ExpenseId equals b.ExpenseId
-                       select b.Total.Value).Sum();
-
-            TotalVM total = new TotalVM();
-            total.Total = sum;
-            return total;
-        }
-
-        public int FormUpdate(FormVM fromVM)
-        {
-            var data = (from a in context.Forms where a.FormId == fromVM.FormId
+            var data = (from a in context.Forms where a.FormId == formVM.FormId
                         select new { form = a}).Single();
             var form = data.form;
-            form.RequestDate = fromVM.RequestDate;
-            form.StartDate = fromVM.StartDate;
-            form.EndDate = fromVM.EndDate;
-            switch (fromVM.Category)
+            form.RequestDate = formVM.RequestDate;
+            form.StartDate = formVM.StartDate;
+            form.EndDate = formVM.EndDate;
+            switch (formVM.Category)
             {
                 case 0:
                     form.Category = Category.Transportation;
@@ -126,22 +113,18 @@ namespace ReimbursementSystemAPI.Repository.Data
                 default:
                     break;
             }
-            form.Description = fromVM.Description;
-            form.Total = fromVM.Total;
-            form.AccountNumber = fromVM.AccountNumber;
-            form.BankName = fromVM.BankName;
-            //form.Attachments = fromVM.Attachments;
-            ////form.ExpenseId = fromVM.ExpenseId;
+            form.Description = formVM.Description;
+            form.Total = formVM.Total;
+            form.AccountNumber = formVM.AccountNumber;
+            form.BankName = formVM.BankName;
 
             context.SaveChanges();
             return 1;
         }
 
-
         public AttachmentsVM Getatc(int imgid)
         {
             var imgPath = (from a in context.Employee_Attachments where a.Id == imgid select a.FilePath).ToList();
-
             
             AttachmentsVM path = new AttachmentsVM();
             path.Name = imgPath[0].ToString();

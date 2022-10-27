@@ -27,6 +27,5 @@ namespace ReimbursementSystemAPI.Repository.Data
 
             return expense.ToList();
         }
-
     }
 }

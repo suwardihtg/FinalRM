@@ -23,6 +23,7 @@ namespace ReimbursementSystemAPI.Controllers
             this.employee_attachmentRepository = repository;
         }
 
+        //UPLOAD ATTACHMENT
         [HttpPost("singleupload")]
         public ActionResult SingleUpload(IFormFile file)
         {
@@ -39,7 +40,6 @@ namespace ReimbursementSystemAPI.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest();
             }
         }

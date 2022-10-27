@@ -25,21 +25,7 @@ namespace ReimbursementSystemClient.Controllers
             this._iconfiguration = configuration;
         }
 
-        //public IActionResult Index()
-        //{
-
-        //    List<Category> CategoryList = context.Categories1.ToList();
-        //    ViewBag.CategoryList = new SelectList(CategoryList, "CategoryId", "CategoryName");
-        //    return View();
-        //}
-        //public JsonResult GetTypeList(int CategoryId)
-        //{
-        //    //context._iconfiguration.ProxyCreationEnabled = false;
-        //    List<Type> TypeList = context.Types.Where(x => x.CategoryId == CategoryId).ToList();
-        //    return Json(TypeList);
-
-        //}
-
+        //Get Form
         [Route("~/forms/getform/{expenseid}")]
         public async Task<JsonResult> GetForm(int expenseid)
         {
@@ -47,6 +33,8 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+
+        //Add New Form
         [HttpPost]
         public JsonResult InsertForm(FormVM formVM)
         {
@@ -67,13 +55,8 @@ namespace ReimbursementSystemClient.Controllers
             return Json(Url.Action("Form", "Reimbusments"));
         }
 
-        [Route("~/forms/TotalExpenseForm/{expenseid}")]
-        public async Task<JsonResult> TotalExpenseForm(int expenseid)
-        {
-            var result = await formRepository.TotalExpenseForm(expenseid);
-            return Json(result);
-        }
 
+        //Edit Form
         [Route("~/Forms/EditForm/{formid}")]
         public JsonResult EditExpense(int formid)
         {
@@ -81,6 +64,7 @@ namespace ReimbursementSystemClient.Controllers
             return Json(formid);
         }
 
+        //Form Call for Edit
         [Route("~/Forms/FormCall/")]
         public JsonResult EditFormCall()
         {
@@ -96,6 +80,8 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+
+        //Upload Attachment
         [HttpPost]
         public JsonResult SingleUpload(FileVM files)
         {
@@ -107,6 +93,7 @@ namespace ReimbursementSystemClient.Controllers
             return Json(result);
         }
 
+        //Get Attachment
         [HttpGet]
         [Route("/Forms/Getatc/{imgid}")]
         public async Task<JsonResult> Getatc(int imgid)

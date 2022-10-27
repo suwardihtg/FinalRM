@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 
 namespace ReimbursementSystemAPI.Models
 {
-    
-    
     public class Employee_Attachment
     {
         [Key]
